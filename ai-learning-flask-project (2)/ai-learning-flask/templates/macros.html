@@ -1,0 +1,71 @@
+{% macro sidebar(user, active, role='student') %}
+<div class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-row">
+      <div class="sb-logo-icon">🧠</div>
+      <div>
+        <div class="sb-logo-name">AI Learning Path</div>
+        <div class="sb-logo-tag">Personalized · Smart</div>
+      </div>
+    </div>
+  </div>
+  <div class="sb-user">
+    <div class="sb-avatar {{ 'teacher' if role=='teacher' else '' }}">{{ user.name[0].upper() }}</div>
+    <div>
+      <div class="sb-name">{{ user.name }}</div>
+      <div class="sb-role">{{ '👩‍🏫 Teacher' if role=='teacher' else '👨‍🎓 Student' }}</div>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <div class="nav-sec">Main</div>
+    {% set base = role + '.' %}
+    <a href="{{ url_for(base+'dashboard') }}" class="nav-item {{ 'active t' if role=='teacher' and active=='dashboard' else 'active' if active=='dashboard' else '' }}">
+      <span class="nav-icon">🏠</span>Dashboard
+    </a>
+    <a href="{{ url_for(base+'subjects') }}" class="nav-item {{ 'active t' if role=='teacher' and active=='subjects' else 'active' if active=='subjects' else '' }}">
+      <span class="nav-icon">📚</span>Subjects
+    </a>
+    <a href="{{ url_for(base+'path') }}" class="nav-item {{ 'active t' if role=='teacher' and active=='path' else 'active' if active=='path' else '' }}">
+      <span class="nav-icon">🗺️</span>My Path
+    </a>
+    <div class="nav-sec">Tools</div>
+    <a href="{{ url_for(base+'notes') }}" class="nav-item {{ 'active t' if role=='teacher' and active=='notes' else 'active' if active=='notes' else '' }}">
+      <span class="nav-icon">📝</span>Notes
+    </a>
+    <a href="{{ url_for(base+'chatbot') }}" class="nav-item {{ 'active t' if role=='teacher' and active=='chatbot' else 'active' if active=='chatbot' else '' }}">
+      <span class="nav-icon">💬</span>AI Chatbot
+    </a>
+    <a href="{{ url_for(base+'profile') }}" class="nav-item {{ 'active t' if role=='teacher' and active=='profile' else 'active' if active=='profile' else '' }}">
+      <span class="nav-icon">👤</span>Profile
+    </a>
+  </nav>
+  <div class="sb-bottom">
+    <a href="{{ url_for('logout') }}" class="logout-btn">🚪 Logout</a>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro skill_bars(scores, role='student') %}
+{% if scores %}
+  {% for subject, score in scores.items() %}
+    {% set cls = 'strong' if score >= 75 else 'mid' if score >= 60 else 'weak' %}
+    {% set lbl = 'Strong' if score >= 75 else 'Average' if score >= 60 else 'Weak' %}
+    {% set col = 'var(--green)' if score >= 75 else 'var(--amber)' if score >= 60 else 'var(--red)' %}
+    <div class="skill-item">
+      <div class="skill-top">
+        <span class="skill-name">{{ subject }}<span class="sbadge sbadge-{{ cls }}">{{ lbl }}</span></span>
+        <span class="skill-pct" style="color:{{ col }}">{{ score }}%</span>
+      </div>
+      <div class="skill-bar-bg">
+        <div class="skill-bar-fill bar-{{ cls }}" style="width:{{ score }}%"></div>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="empty-state">
+    <span class="empty-icon">📊</span>
+    <p>Take a quiz to see your skill scores!</p>
+    <br/><a href="{{ url_for(role+'.subjects') }}" class="btn {{ 'btn-success' if role=='teacher' else 'btn-primary' }} btn-sm">Go to Subjects →</a>
+  </div>
+{% endif %}
+{% endmacro %}

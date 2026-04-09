@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard — Teacher Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#2563eb;--primary-bg:#eff6ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#3b82f6;--primary-bg:rgba(59,130,246,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}
+.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px}.nav-sec{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.nav-a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}
+.nav-a:hover{color:var(--text);background:var(--surface2)}.nav-a.on{color:var(--primary);background:var(--primary-bg);font-weight:600}
+.ni{font-size:15px;width:20px;text-align:center}
+.sfoot{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}
+.uav{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.unm{font-size:12.5px;font-weight:600;color:var(--text)}.url{font-size:11px;color:var(--text3)}
+.logbtn{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}
+.logbtn:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}
+.page-sub{font-size:13px;color:var(--text2)}
+.topbar-r{display:flex;align-items:center;gap:10px}
+.dbadge{font-size:12.5px;font-weight:500;color:var(--text2);background:var(--surface);border:1px solid var(--border);padding:7px 14px;border-radius:8px}
+.ttoggle{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;transition:.2s;box-shadow:var(--shadow)}
+.sc:hover{transform:translateY(-2px)}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.sc1::after{background:linear-gradient(90deg,#2563eb,#60a5fa)}.sc2::after{background:linear-gradient(90deg,#059669,#34d399)}.sc3::after{background:linear-gradient(90deg,#d97706,#fbbf24)}.sc4::after{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+.sc-em{font-size:22px;margin-bottom:10px}
+.sc-val{font-size:30px;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px}
+.sc-lbl{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+.sc-note{font-size:11.5px;color:var(--success);margin-top:5px}
+.grid21{display:grid;grid-template-columns:3fr 2fr;gap:18px;margin-bottom:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.ct{font-size:14px;font-weight:700;color:var(--text)}
+.ca{font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;padding:5px 12px;border-radius:7px;border:1px solid var(--primary)}
+.ca:hover{background:var(--primary-bg)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:9px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);border-bottom:1px solid var(--border)}
+td{padding:11px 12px;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border)}
+tr:last-child td{border:none}tr:hover td{background:var(--surface2)}
+.tdnm{font-weight:600;color:var(--text)}
+.av{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;margin-right:8px;vertical-align:middle}
+.odot{width:7px;height:7px;border-radius:50%;background:var(--success);display:inline-block;margin-right:5px;vertical-align:middle}
+.sb-item{margin-bottom:12px}
+.sb-row{display:flex;justify-content:space-between;margin-bottom:5px}
+.sb-nm{font-size:13px;font-weight:500;color:var(--text)}.sb-pct{font-size:13px;font-weight:700}
+.bar-bg{height:6px;background:var(--surface3);border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px}
+.act-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.act-item:last-child{border:none}
+.act-dot{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.act-txt{font-size:13px;color:var(--text);line-height:1.5}
+.act-tm{font-size:11px;color:var(--text3);margin-top:2px}
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qa{display:flex;align-items:center;gap:9px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);font-size:13px;font-weight:500;transition:.15s}
+.qa:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-bg)}
+.qa-ic{font-size:18px}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Teacher Portal</div></div></div>
+  <nav class="nav">
+    <div class="nav-sec">Overview</div>
+    <a href="/teacher/dashboard" class="nav-a on"><span class="ni">📊</span> Dashboard</a>
+    <a href="/teacher/students" class="nav-a"><span class="ni">👥</span> My Students</a>
+    <a href="/teacher/reports" class="nav-a"><span class="ni">📈</span> Reports</a>
+    <div class="nav-sec">Classroom</div>
+    <a href="/teacher/quiz/General" class="nav-a"><span class="ni">✏️</span> Manage Quiz</a>
+    <a href="/teacher/chatbot" class="nav-a"><span class="ni">🤖</span> AI Assistant</a>
+    <div class="nav-sec">Account</div>
+    <a href="/teacher/profile" class="nav-a"><span class="ni">👤</span> My Profile</a>
+  </nav>
+  <div class="sfoot">
+    <div class="uav">AS</div>
+    <div><div class="unm">Mrs. Ashima Sood</div><div class="url">Teacher</div></div>
+    <a href="/logout" class="logbtn" title="Logout">⇥</a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title">Welcome back, Ashima! 👋</div>
+      <div class="page-sub">3 students registered &middot; 14 total quizzes taken</div>
+    </div>
+    <div class="topbar-r">
+      <div class="dbadge" id="dateBadge">📅 Loading...</div>
+      <button class="ttoggle" id="themeBtn" onclick="toggleTheme()" title="Toggle Light/Dark">🌙</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="sc sc1"><div class="sc-em">👥</div><div class="sc-val">3</div><div class="sc-lbl">Total Students</div><div class="sc-note">Active learners</div></div>
+    <div class="sc sc2"><div class="sc-em">✅</div><div class="sc-val">14</div><div class="sc-lbl">Quizzes Taken</div><div class="sc-note">This month</div></div>
+    <div class="sc sc3"><div class="sc-em">📚</div><div class="sc-val">6</div><div class="sc-lbl">Subjects Active</div><div class="sc-note">All running</div></div>
+    <div class="sc sc4"><div class="sc-em">🤖</div><div class="sc-val">AI</div><div class="sc-lbl">Powered Platform</div><div class="sc-note">Gemini AI Active</div></div>
+  </div>
+
+  <!-- Students + Subjects -->
+  <div class="grid21">
+    <div class="card">
+      <div class="ch"><div class="ct">👥 Recent Students</div><a href="/teacher/students" class="ca">View All</a></div>
+      <table>
+        <thead><tr><th>Student</th><th>Email</th><th>Joined</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><span class="av" style="background:#6366f1">AK</span><span class="tdnm">Aman Kumar</span></td><td>aman@student.com</td><td>Mar 10, 2026</td><td><span class="odot"></span><span style="font-size:12px;color:var(--success);font-weight:600">Active</span></td></tr>
+          <tr><td><span class="av" style="background:#10b981">AG</span><span class="tdnm">Anshita Goel</span></td><td>anshita@student.com</td><td>Mar 11, 2026</td><td><span class="odot"></span><span style="font-size:12px;color:var(--success);font-weight:600">Active</span></td></tr>
+          <tr><td><span class="av" style="background:#f59e0b">DY</span><span class="tdnm">Darpan Yaduvanshi</span></td><td>darpan@student.com</td><td>Mar 12, 2026</td><td><span class="odot"></span><span style="font-size:12px;color:var(--success);font-weight:600">Active</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">📚 Subject Performance</div></div>
+      <div class="sb-item"><div class="sb-row"><span class="sb-nm">📐 Mathematics</span><span class="sb-pct" style="color:#6366f1">82%</span></div><div class="bar-bg"><div class="bar-fill" style="width:82%;background:#6366f1"></div></div></div>
+      <div class="sb-item"><div class="sb-row"><span class="sb-nm">🔬 Science</span><span class="sb-pct" style="color:#10b981">75%</span></div><div class="bar-bg"><div class="bar-fill" style="width:75%;background:#10b981"></div></div></div>
+      <div class="sb-item"><div class="sb-row"><span class="sb-nm">📖 English</span><span class="sb-pct" style="color:#f59e0b">60%</span></div><div class="bar-bg"><div class="bar-fill" style="width:60%;background:#f59e0b"></div></div></div>
+      <div class="sb-item"><div class="sb-row"><span class="sb-nm">🏛️ History</span><span class="sb-pct" style="color:#ef4444">88%</span></div><div class="bar-bg"><div class="bar-fill" style="width:88%;background:#ef4444"></div></div></div>
+      <div class="sb-item"><div class="sb-row"><span class="sb-nm">💻 Computer Sci</span><span class="sb-pct" style="color:#8b5cf6">91%</span></div><div class="bar-bg"><div class="bar-fill" style="width:91%;background:#8b5cf6"></div></div></div>
+      <div class="sb-item"><div class="sb-row"><span class="sb-nm">🌍 Geography</span><span class="sb-pct" style="color:#06b6d4">70%</span></div><div class="bar-bg"><div class="bar-fill" style="width:70%;background:#06b6d4"></div></div></div>
+    </div>
+  </div>
+
+  <!-- Activity + Quick Actions -->
+  <div class="grid2">
+    <div class="card">
+      <div class="ch"><div class="ct">⚡ Recent Activity</div></div>
+      <div class="act-item"><div class="act-dot" style="background:#d1fae5">✅</div><div><div class="act-txt">Aman Kumar completed CS Quiz — <strong style="color:var(--success)">100%</strong></div><div class="act-tm">Today, 10:30 AM</div></div></div>
+      <div class="act-item"><div class="act-dot" style="background:#fef3c7">📝</div><div><div class="act-txt">Anshita completed Math Quiz — <strong style="color:var(--warning)">80%</strong></div><div class="act-tm">Yesterday, 3:15 PM</div></div></div>
+      <div class="act-item"><div class="act-dot" style="background:#dbeafe">👤</div><div><div class="act-txt">New student registered — <strong>Darpan Y.</strong></div><div class="act-tm">Mar 20, 5:00 PM</div></div></div>
+      <div class="act-item"><div class="act-dot" style="background:#fee2e2">⚠️</div><div><div class="act-txt">Anshita needs help in English — <strong style="color:var(--danger)">40%</strong></div><div class="act-tm">Mar 19, 11:00 AM</div></div></div>
+      <div class="act-item"><div class="act-dot" style="background:#ede9fe">🤖</div><div><div class="act-txt">AI updated learning paths for 3 students</div><div class="act-tm">Mar 18, 2:00 PM</div></div></div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">🚀 Quick Actions</div></div>
+      <div class="qa-grid">
+        <a href="/teacher/students" class="qa"><span class="qa-ic">👥</span><div><div style="font-weight:700;font-size:13px">View Students</div><div style="font-size:11px;color:var(--text3)">Manage all</div></div></a>
+        <a href="/teacher/quiz/General" class="qa"><span class="qa-ic">✏️</span><div><div style="font-weight:700;font-size:13px">Set Quiz</div><div style="font-size:11px;color:var(--text3)">Create new</div></div></a>
+        <a href="/teacher/reports" class="qa"><span class="qa-ic">📈</span><div><div style="font-weight:700;font-size:13px">Reports</div><div style="font-size:11px;color:var(--text3)">Analytics</div></div></a>
+        <a href="/teacher/chatbot" class="qa"><span class="qa-ic">🤖</span><div><div style="font-weight:700;font-size:13px">AI Assistant</div><div style="font-size:11px;color:var(--text3)">Ask anything</div></div></a>
+        <a href="/teacher/profile" class="qa"><span class="qa-ic">⚙️</span><div><div style="font-weight:700;font-size:13px">Settings</div><div style="font-size:11px;color:var(--text3)">Profile</div></div></a>
+        <a href="/logout" class="qa" style="border-color:rgba(220,38,38,.2)"><span class="qa-ic">⇥</span><div><div style="font-weight:700;font-size:13px;color:var(--danger)">Logout</div><div style="font-size:11px;color:var(--text3)">Sign out</div></div></a>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+(function(){var t=localStorage.getItem('t')||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('t',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙';}
+var d=new Date(),days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+document.getElementById('dateBadge').textContent='📅 '+days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+</script>
+</body>
+</html>

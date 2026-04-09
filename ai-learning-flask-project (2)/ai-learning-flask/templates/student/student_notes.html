@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Notes — Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#6366f1;--primary-bg:#eef2ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#818cf8;--primary-bg:rgba(99,102,241,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px;overflow-y:auto}.nav::-webkit-scrollbar{width:0}.ns{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.na{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}.na:hover{color:var(--text);background:var(--surface2)}.na.on{color:var(--primary);background:var(--primary-bg);font-weight:600}.ni{font-size:15px;width:20px;text-align:center}
+.sfoot{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}.uav{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}.unm{font-size:12.5px;font-weight:600;color:var(--text)}.url{font-size:11px;color:var(--text3)}.lb{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}.lb:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}.page-sub{font-size:13px;color:var(--text2)}.tt{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.ct{font-size:14px;font-weight:700;color:var(--text)}
+.bar-bg{height:5px;background:var(--surface3);border-radius:99px;overflow:hidden}.bar-fill{height:100%;border-radius:99px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.toast{position:fixed;bottom:22px;right:22px;padding:12px 18px;border-radius:10px;font-size:13.5px;font-weight:600;display:none;z-index:999;background:var(--success);color:#fff}
+
+.upload-zone{border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:.2s;margin-bottom:16px;background:var(--surface)}
+.upload-zone:hover{border-color:var(--primary);background:var(--primary-bg)}.upload-zone.drag{border-color:var(--primary);background:var(--primary-bg)}
+.uz-ic{font-size:36px;margin-bottom:10px}.uz-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px}.uz-sub{font-size:13px;color:var(--text3)}
+.file-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--primary-bg);border:1px solid var(--primary);border-radius:8px;font-size:13px;font-weight:600;color:var(--primary);margin-top:10px}
+.file-chip button{background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:0}
+.type-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.tbtn{padding:11px 8px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--text2);transition:.15s;text-align:center}.tbtn:hover{color:var(--text)}.tbtn.on{background:var(--primary-bg);border-color:var(--primary);color:var(--primary)}
+.analyze-btn{width:100%;padding:13px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;margin-bottom:16px}.analyze-btn:disabled{opacity:.4;cursor:not-allowed}.analyze-btn:not(:disabled):hover{opacity:.9}
+.result-card{background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:18px;margin-bottom:16px;display:none}
+.rc-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:10px}
+.rc-text{font-size:13.5px;color:var(--text2);line-height:1.7;white-space:pre-wrap}
+.typing-dots span{display:inline-block;animation:blink 1.2s infinite}.typing-dots span:nth-child(2){animation-delay:.2s}.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:0}40%{opacity:1}}
+.past-list{display:flex;flex-direction:column;gap:8px}
+.pitem{padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s}.pitem:hover{border-color:var(--primary)}
+.pitem-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}.pitem-meta{font-size:11.5px;color:var(--text3)}
+.grid-notes{display:grid;grid-template-columns:3fr 2fr;gap:18px;align-items:start}
+
+</style>
+</head>
+<body><aside class="sidebar"><div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Student Portal</div></div></div><nav class="nav"><div class="ns">Main</div><a href="/student/dashboard" class="na"><span class="ni">📊</span> Dashboard</a><a href="/student/subjects" class="na"><span class="ni">📚</span> Subjects</a><a href="/student/quiz/General" class="na"><span class="ni">✏️</span> Take Quiz</a><div class="ns">Learning</div><a href="/student/path" class="na"><span class="ni">🗺️</span> Learning Path</a><a href="/student/notes" class="na on"><span class="ni">📝</span> AI Notes</a><a href="/student/chatbot" class="na"><span class="ni">🤖</span> AI Chatbot</a><div class="ns">Account</div><a href="/student/profile" class="na"><span class="ni">👤</span> Profile</a></nav><div class="sfoot"><div class="uav">{{ (user.name or 'U')[0:2]|upper }}</div><div><div class="unm">{{ user.name }}</div><div class="url">Student &middot; {{ user.class_level or 'No Class' }}</div></div><a href="/logout" class="lb">&#x21A5;</a></div></aside>
+
+<main class="main">
+  <div class="topbar"><div><div class="page-title">AI Notes Analyzer</div><div class="page-sub">Upload your notes and get AI-powered analysis</div></div><button class="tt" id="themeBtn" onclick="toggleTheme()">🌙</button></div>
+  <div class="grid-notes">
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="ct" style="margin-bottom:14px">📂 Upload Notes</div>
+        <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileIn').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event)">
+          <div class="uz-ic">📄</div>
+          <div class="uz-title">Drop your .txt file here</div>
+          <div class="uz-sub">or click to browse &middot; Supports .txt files</div>
+          <div id="fileChip" style="display:none" class="file-chip">📄 <span id="fileName">file.txt</span><button onclick="removeFile(event)">✕</button></div>
+        </div>
+        <input type="file" id="fileIn" accept=".txt" style="display:none" onchange="handleFile(this)"/>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="ct" style="margin-bottom:12px">🎯 Analysis Type</div>
+        <div class="type-btns">
+          <div class="tbtn on" onclick="setType(this,'summary')">📝 Summary</div>
+          <div class="tbtn" onclick="setType(this,'qa')">❓ Q&amp;A</div>
+          <div class="tbtn" onclick="setType(this,'concepts')">💡 Concepts</div>
+          <div class="tbtn" onclick="setType(this,'full')">🔍 Full</div>
+        </div>
+        <button class="analyze-btn" id="analyzeBtn" disabled onclick="analyzeNotes()">🤖 Analyze with AI</button>
+        <div class="result-card" id="resultCard">
+          <div class="rc-title" id="rcTitle">📝 Summary</div>
+          <div class="rc-text" id="rcText"></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ct" style="margin-bottom:14px">📚 Past Analyses</div>
+        <div class="past-list">
+          <div class="pitem" onclick="loadPast('Math Notes — Quadratic Equations','This chapter covers quadratic equations of form ax²+bx+c=0. Key methods: Factorization, Completing the Square, and Quadratic Formula. Discriminant b²-4ac determines nature of roots.')"><div class="pitem-title">📐 Math — Quadratic Equations</div><div class="pitem-meta">Summary · Mar 20 · 2 days ago</div></div>
+          <div class="pitem" onclick="loadPast('Science Notes — Atoms &amp; Molecules','Atoms are smallest units of elements. Molecules are combinations of atoms. Atomic number = protons. Mass number = protons + neutrons. Isotopes have same atomic number but different mass numbers.')"><div class="pitem-title">🔬 Science — Atoms &amp; Molecules</div><div class="pitem-meta">Concepts · Mar 19 · 3 days ago</div></div>
+          <div class="pitem" onclick="loadPast('English Notes — Grammar Tips','Key grammar rules: Subject-verb agreement, correct tense usage, proper punctuation. Common mistakes: Their/There/They&apos;re, Your/You&apos;re, Its/It&apos;s. Practice daily with short writing exercises.')"><div class="pitem-title">📖 English — Grammar Notes</div><div class="pitem-meta">Q&amp;A · Mar 18 · 4 days ago</div></div>
+          <div class="pitem" onclick="loadPast('History — Mughal Empire Summary','The Mughal Empire was founded by Babur in 1526 after the Battle of Panipat. Akbar was the greatest ruler who introduced religious tolerance. Aurangzeb extended the empire but his strict policies weakened it.')"><div class="pitem-title">🏛️ History — Mughal Empire</div><div class="pitem-meta">Full Analysis · Mar 17 · 5 days ago</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main><script>
+(function(){var t=localStorage.getItem('t')||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('t',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙';}
+function showToast(m){var t=document.getElementById('toastEl');if(!t)return;t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},3000);}
+
+var fileContent = '', analysisType = 'summary';
+var DEMO = {
+  summary: 'Your notes cover the key concepts well. The main topics identified are: Core Definitions, Important Formulas, and Application Examples.\n\nKey Takeaways:\n• The foundational concepts are clearly explained\n• Mathematical formulas are correctly noted\n• Real-world examples help reinforce understanding\n\nRecommendation: Review the highlighted weak areas and practice 5 problems daily for best results.',
+  qa: 'Q1: What is the main concept discussed in your notes?\nA: The notes focus on fundamental principles with examples and applications.\n\nQ2: What formulas are important to remember?\nA: The key formulas noted are essential for problem-solving. Memorize them with examples.\n\nQ3: How can you apply this knowledge?\nA: Practice through exercises, real-world examples, and past exam questions.',
+  concepts: 'Key Concepts Identified:\n\n1. Core Principle — The foundational idea explained in your notes\n2. Supporting Theory — Background knowledge that strengthens understanding\n3. Application Method — How to use this in problem solving\n4. Common Pitfalls — Mistakes to avoid based on your notes\n\nWeakest Area: Review section 3 more carefully.',
+  full: 'FULL ANALYSIS REPORT\n\nStrengths: Your notes are well-organized and cover the essential topics thoroughly.\n\nAreas for Improvement: Some advanced concepts need more detail. Add more worked examples.\n\nRecommended Study Plan:\nDay 1-2: Re-read and highlight key formulas\nDay 3-4: Practice 10 problems each day\nDay 5: Mock test on this topic\n\nConfidence Score: 72% — Keep practicing!'
+};
+function handleFile(input) {
+  var file = input.files[0];
+  if (!file) return;
+  document.getElementById('fileName').textContent = file.name;
+  document.getElementById('fileChip').style.display = 'inline-flex';
+  document.getElementById('analyzeBtn').disabled = false;
+  var reader = new FileReader();
+  reader.onload = function(e) { fileContent = e.target.result; };
+  reader.readAsText(file);
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag');
+  var file = e.dataTransfer.files[0];
+  if (file && file.name.endsWith('.txt')) {
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileChip').style.display = 'inline-flex';
+    document.getElementById('analyzeBtn').disabled = false;
+  }
+}
+function removeFile(e) {
+  e.stopPropagation();
+  document.getElementById('fileChip').style.display = 'none';
+  document.getElementById('analyzeBtn').disabled = true;
+  fileContent = '';
+}
+function setType(el, type) {
+  analysisType = type;
+  document.querySelectorAll('.tbtn').forEach(function(b){b.classList.remove('on')});
+  el.classList.add('on');
+}
+async function analyzeNotes() {
+  if (!fileContent) return;
+  var rc = document.getElementById('resultCard');
+  var rt = document.getElementById('rcText');
+  var titles = {summary:'📝 Summary',qa:'❓ Q&A Generated',concepts:'💡 Key Concepts',full:'🔍 Full Analysis'};
+  document.getElementById('rcTitle').textContent = titles[analysisType];
+  rt.innerHTML = '<span class="typing-dots"><span>●</span><span>●</span><span>●</span> Analyzing with AI...</span>';
+  rc.style.display = 'block';
+  try {
+    var form = new FormData();
+    form.append('subject', analysisType);
+    form.append('content', fileContent.substring(0, 3000));
+    var res = await fetch('/api/analyze-notes', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({content: fileContent.substring(0, 3000)})});
+    var data = await res.json();
+    rt.textContent = data.analysis || 'Analysis complete.';
+  } catch(e) {
+    rt.textContent = 'Upload your .txt file and click Analyze. AI will review your notes and give feedback.';
+  }
+}
+function loadPast(title, text) {
+  var rc = document.getElementById('resultCard');
+  document.getElementById('rcTitle').textContent = title;
+  document.getElementById('rcText').textContent = text;
+  rc.style.display = 'block';
+  rc.scrollIntoView({behavior:'smooth'});
+}
+
+</script>
+</body></html>

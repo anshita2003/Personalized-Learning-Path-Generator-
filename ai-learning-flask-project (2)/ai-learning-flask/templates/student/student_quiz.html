@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Take Quiz — Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#6366f1;--primary-bg:#eef2ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#818cf8;--primary-bg:rgba(99,102,241,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px;overflow-y:auto}.nav::-webkit-scrollbar{width:0}.ns{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.na{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}.na:hover{color:var(--text);background:var(--surface2)}.na.on{color:var(--primary);background:var(--primary-bg);font-weight:600}.ni{font-size:15px;width:20px;text-align:center}
+.sfoot{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}.uav{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}.unm{font-size:12.5px;font-weight:600;color:var(--text)}.url{font-size:11px;color:var(--text3)}.lb{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}.lb:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}.page-sub{font-size:13px;color:var(--text2)}.tt{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.ct{font-size:14px;font-weight:700;color:var(--text)}
+.bar-bg{height:5px;background:var(--surface3);border-radius:99px;overflow:hidden}.bar-fill{height:100%;border-radius:99px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.toast{position:fixed;bottom:22px;right:22px;padding:12px 18px;border-radius:10px;font-size:13.5px;font-weight:600;display:none;z-index:999;background:var(--success);color:#fff}
+
+.sel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.selcard{border:2px solid var(--border);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:.2s;background:var(--surface)}.selcard:hover{border-color:var(--primary);background:var(--primary-bg)}.selcard.picked{border-color:var(--primary);background:var(--primary-bg)}
+.sel-ic{font-size:30px;margin-bottom:8px}.sel-nm{font-size:14px;font-weight:700;color:var(--text)}.sel-cnt{font-size:12px;color:var(--text3);margin-top:3px}
+.start-btn{width:100%;padding:13px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:.2s}.start-btn:disabled{opacity:.4;cursor:not-allowed}.start-btn:not(:disabled):hover{opacity:.9}
+.quiz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.q-prog{font-size:13px;font-weight:600;color:var(--text2)}.q-timer{font-size:16px;font-weight:700;padding:6px 16px;border-radius:8px;background:var(--primary-bg);color:var(--primary);border:1px solid var(--primary)}.q-timer.warn{background:#fef3c7;color:#92400e;border-color:#d97706}[data-theme="dark"] .q-timer.warn{background:rgba(217,119,6,.15)}
+.prog-bar{height:5px;background:var(--surface3);border-radius:99px;overflow:hidden;margin-bottom:20px}.prog-fill{height:100%;background:var(--primary);border-radius:99px;transition:width .4s ease}
+.q-text{font-size:17px;font-weight:600;color:var(--text);line-height:1.5;margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{padding:13px 18px;border:2px solid var(--border);border-radius:10px;font-size:14px;font-weight:500;color:var(--text);cursor:pointer;transition:.2s;display:flex;align-items:center;gap:12px}.opt:hover{border-color:var(--primary);background:var(--primary-bg)}.opt.correct{border-color:var(--success);background:#d1fae5;color:#065f46;cursor:default}.opt.wrong{border-color:var(--danger);background:#fee2e2;color:#991b1b;cursor:default}.opt.disabled{cursor:default}[data-theme="dark"] .opt.correct{background:rgba(5,150,105,.15);color:#6ee7b7}[data-theme="dark"] .opt.wrong{background:rgba(220,38,38,.15);color:#fca5a5}
+.opt-circle{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.next-btn{margin-top:16px;padding:11px 28px;border:none;border-radius:9px;background:var(--primary);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;display:none}.next-btn:hover{opacity:.9}
+.result-hero{text-align:center;padding:20px;margin-bottom:20px}
+.result-title{font-family:'DM Serif Display',serif;font-size:24px;color:var(--text);margin-bottom:6px}.result-sub{font-size:14px;color:var(--text2)}
+.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.rstat{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}.rstat-val{font-size:22px;font-weight:700;margin-bottom:4px}.rstat-lbl{font-size:11.5px;color:var(--text3);font-weight:600}
+.res-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.rbtn{padding:11px 24px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:.2s}
+.rbtn-p{background:var(--primary);color:#fff;border:none}.rbtn-p:hover{opacity:.9}.rbtn-s{background:var(--surface2);color:var(--text);border:1px solid var(--border)}.rbtn-s:hover{border-color:var(--primary);color:var(--primary)}
+.ai-card{background:var(--primary-bg);border:1px solid var(--primary);border-radius:12px;padding:18px;margin-top:16px}.ai-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:8px}.ai-text{font-size:13px;color:var(--text2);line-height:1.6}
+.hidden{display:none!important}
+
+</style>
+</head>
+<body><aside class="sidebar"><div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Student Portal</div></div></div><nav class="nav"><div class="ns">Main</div><a href="/student/dashboard" class="na"><span class="ni">📊</span> Dashboard</a><a href="/student/subjects" class="na"><span class="ni">📚</span> Subjects</a><a href="/student/quiz/General" class="na on"><span class="ni">✏️</span> Take Quiz</a><div class="ns">Learning</div><a href="/student/path" class="na"><span class="ni">🗺️</span> Learning Path</a><a href="/student/notes" class="na"><span class="ni">📝</span> AI Notes</a><a href="/student/chatbot" class="na"><span class="ni">🤖</span> AI Chatbot</a><div class="ns">Account</div><a href="/student/profile" class="na"><span class="ni">👤</span> Profile</a></nav><div class="sfoot"><div class="uav">{{ (user.name or 'U')[0:2]|upper }}</div><div><div class="unm">{{ user.name }}</div><div class="url">Student &middot; {{ user.class_level or 'No Class Set' }}</div></div><a href="/logout" class="lb">&#x21A5;</a></div></aside>
+<main class="main">
+  <div class="topbar"><div><div class="page-title">Take Quiz</div><div class="page-sub">{{ class_level }} — AI-generated questions tailored for your class</div></div><div style="display:flex;align-items:center;gap:10px"><div style="padding:5px 14px;background:var(--primary-bg);border:1px solid var(--primary);border-radius:99px;font-size:12.5px;font-weight:700;color:var(--primary)">🎓 {{ class_level }}</div><button class="tt" id="themeBtn" onclick="toggleTheme()">🌙</button></div></div>
+  <div id="selectScreen">
+    <div class="card">
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px">Select a Subject — <span style="color:var(--primary);font-size:13px;font-weight:600">{{ class_level }}</span></div>
+      <div class="sel-grid">
+        {% for s in subjects %}
+        <div class="selcard" onclick="pick(this, '{{ s.name }}')">
+          <div class="sel-ic">{{ s.icon }}</div>
+          <div class="sel-nm">{{ s.name }}</div>
+          <div class="sel-cnt">5 questions</div>
+        </div>
+        {% endfor %}
+      </div>
+      <button class="start-btn" id="startBtn" disabled onclick="startQuiz()">Start Quiz →</button>
+    </div>
+  </div>
+  <div id="quizScreen" class="hidden">
+    <div class="quiz-header"><div class="q-prog" id="qProg">Question 1 of 5</div><div class="q-timer" id="qTimer">⏱ 10:00</div></div>
+    <div class="prog-bar"><div class="prog-fill" id="pFill" style="width:20%"></div></div>
+    <div class="card"><div class="q-text" id="qText"></div><div class="opts" id="optsDiv"></div><button class="next-btn" id="nextBtn" onclick="nextQ()">Next →</button></div>
+  </div>
+  <div id="resultScreen" class="hidden">
+    <div class="card">
+      <div class="result-hero">
+        <svg width="110" height="110" viewBox="0 0 110 110" style="margin-bottom:14px"><circle cx="55" cy="55" r="46" fill="none" stroke="var(--surface3)" stroke-width="9"/><circle cx="55" cy="55" r="46" fill="none" id="sArc" stroke="#6366f1" stroke-width="9" stroke-linecap="round" transform="rotate(-90 55 55)" stroke-dasharray="0 289"/><text x="55" y="51" text-anchor="middle" dominant-baseline="middle" style="font-size:20px;font-weight:700;fill:var(--text)" id="sNum">0</text><text x="55" y="67" text-anchor="middle" dominant-baseline="middle" style="font-size:10px;fill:var(--text3)">/ 5</text></svg>
+        <div class="result-title" id="rTitle">Well Done!</div><div class="result-sub" id="rSub">Quiz completed!</div>
+      </div>
+      <div class="result-stats"><div class="rstat"><div class="rstat-val" id="rC" style="color:var(--success)">0</div><div class="rstat-lbl">Correct</div></div><div class="rstat"><div class="rstat-val" id="rW" style="color:var(--danger)">0</div><div class="rstat-lbl">Wrong</div></div><div class="rstat"><div class="rstat-val" id="rP" style="color:var(--primary)">0%</div><div class="rstat-lbl">Score</div></div></div>
+      <div class="res-btns"><button class="rbtn rbtn-p" onclick="restartQ()">🔄 Try Again</button><a href="/student/path" class="rbtn rbtn-s">🗺️ Learning Path</a><a href="/student/dashboard" class="rbtn rbtn-s">📊 Dashboard</a></div>
+      <div class="ai-card"><div class="ai-title">🤖 AI Analysis</div><div class="ai-text" id="aiTxt">Analyzing your performance...</div></div>
+    </div>
+  </div>
+</main><script>
+(function(){var t=localStorage.getItem('t')||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('t',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙';}
+function showToast(m){var t=document.getElementById('toastEl');if(!t)return;t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},3000);}
+
+var QS={};
+var sel='',curQ=0,score=0,done=false,tInt,tLeft=600,weakTopics=[];
+function pick(el,s){document.querySelectorAll('.selcard').forEach(function(c){c.classList.remove('picked')});el.classList.add('picked');sel=s;document.getElementById('startBtn').disabled=false;}
+async function startQuiz(){
+    if(!sel)return;
+    var btn = document.getElementById('startBtn');
+    var ogText = btn.textContent;
+    btn.textContent = 'Generating AI Quiz... ⏳';
+    btn.disabled = true;
+
+    try {
+        var res = await fetch('/student/api/generate-quiz?subject=' + encodeURIComponent(sel));
+        var data = await res.json();
+        if (data && data.questions && data.questions.length > 0) {
+           QS[sel] = data.questions;
+        } else {
+           throw new Error("Empty questions array");
+        }
+    } catch (err) {
+        console.error("Quiz load error:", err);
+        showToast('⚠️ Could not generate quiz questions. Please try again!');
+        btn.textContent = ogText;
+        btn.disabled = false;
+        return; // ← critical: stop here if no questions
+    }
+
+    btn.textContent = ogText;
+    btn.disabled = false;
+    curQ=0;score=0;tLeft=600;done=false;weakTopics=[];
+    document.getElementById('selectScreen').classList.add('hidden');
+    document.getElementById('quizScreen').classList.remove('hidden');
+    renderQ();
+    tInt=setInterval(function(){
+        tLeft--;
+        var m=Math.floor(tLeft/60),s=tLeft%60,el=document.getElementById('qTimer');
+        el.textContent='⏱ '+m+':'+(s<10?'0':'')+s;
+        if(tLeft<=60)el.classList.add('warn');
+        if(tLeft<=0){clearInterval(tInt);showRes();}
+    },1000);
+}
+function renderQ(){
+    var q=QS[sel][curQ];
+    document.getElementById('qProg').textContent='Question '+(curQ+1)+' of '+QS[sel].length;
+    document.getElementById('pFill').style.width=((curQ+1)/QS[sel].length*100)+'%';
+    document.getElementById('qText').textContent=(curQ+1)+'. '+q.q;
+    var div=document.getElementById('optsDiv');div.innerHTML='';done=false;
+    document.getElementById('nextBtn').style.display='none';
+    var L=['A','B','C','D'];
+    q.o.forEach(function(opt,i){
+        var d=document.createElement('div');d.className='opt';
+        d.innerHTML='<span class="opt-circle">'+L[i]+'</span>'+opt;
+        d.onclick=function(){if(!done)choose(i,d)};
+        div.appendChild(d);
+    });
+}
+function choose(i,el){
+    done=true;
+    var a=QS[sel][curQ].a,opts=document.querySelectorAll('.opt');
+    opts.forEach(function(o){o.classList.add('disabled');o.onclick=null});
+    if(i===a){
+        el.classList.add('correct');score++;
+    }else{
+        el.classList.add('wrong');opts[a].classList.add('correct');
+        weakTopics.push(QS[sel][curQ].q.substring(0, 50));
+    }
+    document.getElementById('nextBtn').style.display='inline-block';
+}
+function nextQ(){
+    curQ++;
+    if(curQ>=QS[sel].length){clearInterval(tInt);showRes();}
+    else renderQ();
+}
+function showRes(){
+    document.getElementById('quizScreen').classList.add('hidden');
+    document.getElementById('resultScreen').classList.remove('hidden');
+    var total=QS[sel].length;
+    var p=Math.round(score/total*100);
+    document.getElementById('sNum').textContent=score;
+    document.getElementById('rC').textContent=score;
+    document.getElementById('rW').textContent=total-score;
+    document.getElementById('rP').textContent=p+'%';
+    document.getElementById('sArc').setAttribute('stroke-dasharray',(289*(score/total))+' 289');
+    document.getElementById('sArc').setAttribute('stroke',p>=80?'#059669':p>=60?'#d97706':'#dc2626');
+    var ts=['Keep Practicing!','Good Effort!','Well Done!','Great Job!','Excellent! 🌟'];
+    document.getElementById('rTitle').textContent=ts[Math.min(score, 4)];
+    document.getElementById('rSub').textContent=p+'% in '+(sel.charAt(0).toUpperCase()+sel.slice(1));
+    var tips={math:'Focus on Trigonometry.',science:'Review Organic Chemistry.',english:'Work on Grammar and Writing.',history:'Revise Medieval Era.',cs:'Try advanced DS problems.',geo:'Practice Map Work and Climate.'};
+    document.getElementById('aiTxt').textContent=(p>=80?'Great performance! ':p>=60?'Good work! ':'')+tips[sel]+' Keep practicing regularly!';
+
+    // Submit generated quiz result data back to the server.
+    fetch('/student/quiz/submit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ subject: sel, score: score, total: total, weak: weakTopics })
+    }).catch(e => console.error("Error logging score", e));
+}
+function restartQ(){clearInterval(tInt);document.getElementById('resultScreen').classList.add('hidden');document.getElementById('selectScreen').classList.remove('hidden');document.querySelectorAll('.selcard').forEach(function(c){c.classList.remove('picked')});document.getElementById('startBtn').disabled=true;sel='';}
+
+</script>
+</body></html>

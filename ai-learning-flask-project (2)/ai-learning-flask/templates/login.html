@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Learning Path — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 920px;
+  display: flex;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+  min-height: 580px;
+}
+
+/* ── LEFT FORM ── */
+.form-side {
+  width: 380px;
+  flex-shrink: 0;
+  background: #ffffff;
+  padding: 40px 44px 36px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px 0 0 24px;
+  overflow-y: auto;
+}
+.form-side::-webkit-scrollbar { width: 0; }
+
+.logo {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px; flex-shrink: 0;
+}
+.logo-icon {
+  width: 44px; height: 44px;
+  background: #1e1b4b; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.logo-name { font-size: 15px; font-weight: 700; color: #111827; }
+.logo-tag  { font-size: 11.5px; color: #9ca3af; margin-top: 2px; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 16px; border-radius: 99px;
+  font-size: 13px; font-weight: 600;
+  width: fit-content; margin-bottom: 14px;
+  transition: all 0.3s;
+  background: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd;
+}
+.badge.teacher { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
+
+.heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 700;
+  color: #111827; margin-bottom: 6px; line-height: 1.2;
+}
+.subheading {
+  font-size: 13.5px; color: #9ca3af;
+  margin-bottom: 24px; line-height: 1.5;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #f1f5f9;
+  margin-bottom: 22px;
+}
+.tab-btn {
+  padding: 8px 0; margin-right: 24px;
+  background: none; border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 500;
+  color: #9ca3af; cursor: pointer;
+  border-bottom: 2.5px solid transparent;
+  margin-bottom: -2px; transition: all 0.2s;
+}
+.tab-btn:hover { color: #374151; }
+.tab-btn.active-s { color: #7c3aed; border-bottom-color: #7c3aed; font-weight: 600; }
+.tab-btn.active-t { color: #1d4ed8; border-bottom-color: #1d4ed8; font-weight: 600; }
+
+.alert {
+  font-size: 13px; padding: 10px 14px;
+  border-radius: 10px; margin-bottom: 16px; display: none;
+}
+.alert.show { display: block; }
+.alert.error   { background: #fef2f2; border: 1.5px solid #fca5a5; color: #dc2626; }
+.alert.success { background: #f0fdf4; border: 1.5px solid #86efac; color: #16a34a; }
+
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 6px; }
+.field input {
+  width: 100%; padding: 12px 14px;
+  border: 1.5px solid #e5e7eb; border-radius: 10px;
+  font-family: 'Inter', sans-serif; font-size: 14px; color: #111827;
+  background: #f9fafb; outline: none; transition: all 0.2s;
+}
+.field input::placeholder { color: #c4c9d4; }
+.field input:focus {
+  border-color: #7c3aed; background: #fff;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+}
+.field input.blue:focus {
+  border-color: #2563eb; background: #fff;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+
+.rf-row {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 20px;
+}
+.remember {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; color: #6b7280; cursor: pointer;
+}
+.remember input { width: 14px; height: 14px; accent-color: #7c3aed; cursor: pointer; }
+.forgot-btn {
+  background: none; border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 500; padding: 0;
+  color: #7c3aed; transition: color 0.2s;
+}
+.forgot-btn.blue { color: #2563eb; }
+.forgot-btn:hover { text-decoration: underline; }
+
+.submit-btn {
+  width: 100%; padding: 13px;
+  border: none; border-radius: 11px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px; font-weight: 600;
+  color: #fff; cursor: pointer; margin-bottom: 16px;
+  transition: all 0.22s; letter-spacing: 0.2px;
+  background: #7c3aed;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+}
+.submit-btn.blue { background: #2563eb; box-shadow: 0 4px 16px rgba(37,99,235,0.4); }
+.submit-btn:hover { transform: translateY(-1px); }
+.submit-btn:not(.blue):hover { box-shadow: 0 6px 22px rgba(124,58,237,0.52); }
+.submit-btn.blue:hover { box-shadow: 0 6px 22px rgba(37,99,235,0.52); }
+.submit-btn:active { transform: scale(0.99); }
+.submit-btn.loading { opacity: 0.8; cursor: not-allowed; transform: none; }
+
+/* ── Divider ── */
+.divider {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px; background: #e5e7eb;
+}
+.divider span { font-size: 12.5px; color: #9ca3af; white-space: nowrap; }
+
+/* ── Google Button ── */
+.google-btn {
+  width: 100%;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 11px 14px;
+  background: #fff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 11px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 600; color: #374151;
+  cursor: pointer; transition: all 0.2s;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.google-btn:hover {
+  border-color: #c7c7c7;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+  background: #fafafa;
+  transform: translateY(-1px);
+}
+.google-btn:active { transform: scale(0.99); }
+.google-icon { width: 20px; height: 20px; flex-shrink: 0; }
+
+.footer-txt { text-align: center; font-size: 13px; color: #9ca3af; margin-bottom: 14px; }
+.footer-txt a { font-weight: 600; cursor: pointer; text-decoration: none; }
+.footer-txt a.purple { color: #7c3aed; }
+.footer-txt a.blue   { color: #2563eb; }
+.footer-txt a:hover  { text-decoration: underline; }
+
+.teacher-toggle {
+  text-align: center;
+  padding-top: 12px;
+  border-top: 1px solid #f3f4f6;
+}
+.teacher-toggle button {
+  background: none; border: 1.5px solid #e5e7eb; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; color: #374151; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px; border-radius: 10px; transition: all 0.2s;
+  width: 100%; justify-content: center;
+}
+.teacher-toggle button:hover { color: #111827; background: #f9fafb; border-color: #9ca3af; }
+.teacher-toggle button.teacher-active {
+  background: #eff6ff; border-color: #93c5fd; color: #1d4ed8;
+}
+.teacher-toggle button.student-active {
+  background: #f5f3ff; border-color: #c4b5fd; color: #6d28d9;
+}
+
+.hidden { display: none !important; }
+
+/* ── RIGHT PHOTO ── */
+.photo-side {
+  flex: 1; position: relative; overflow: hidden;
+  border-radius: 0 24px 24px 0; background: #1f2937;
+}
+.photo-side img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+}
+.photo-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(0,0,0,0.04) 0%, rgba(0,0,0,0) 35%,
+    rgba(0,0,0,0.52) 68%, rgba(0,0,0,0.90) 100%);
+  z-index: 1;
+}
+.quote-area {
+  position: absolute; bottom: 22px; left: 20px; right: 20px; z-index: 5;
+}
+.quote-card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 16px; padding: 20px 22px;
+}
+.q-stars { font-size: 14px; letter-spacing: 2px; color: #a78bfa; margin-bottom: 10px; transition: color 0.4s; }
+.q-text  {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; line-height: 1.65; color: #fff;
+  font-style: italic; margin-bottom: 8px; transition: opacity 0.3s;
+}
+.q-author { font-size: 12px; color: rgba(255,255,255,0.45); }
+.q-nav { display: flex; gap: 8px; margin-top: 14px; justify-content: flex-end; }
+.q-btn {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.75);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 13px; transition: all 0.2s;
+}
+.q-btn:hover { background: rgba(255,255,255,0.24); color: #fff; }
+
+@media (max-width: 700px) {
+  body { padding: 0; align-items: flex-start; background: #fff; }
+  .card { flex-direction: column; min-height: 100vh; border-radius: 0; }
+  .form-side { width: 100%; border-radius: 0; }
+  .photo-side { height: 220px; flex-shrink: 0; border-radius: 0; order: -1; }
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- ══ LEFT FORM ══ -->
+  <div class="form-side" id="formSide">
+
+    <div class="logo">
+      <div class="logo-icon">🧠</div>
+      <div>
+        <div class="logo-name">AI Learning Path</div>
+        <div class="logo-tag">Personalized · Smart · Skill-based</div>
+      </div>
+    </div>
+
+    <div class="badge" id="roleBadge">👨‍🎓 Student</div>
+    <div class="heading" id="heading">Welcome back</div>
+    <div class="subheading" id="subheading">Welcome back! Please enter your details.</div>
+
+    <div class="tabs">
+      <button class="tab-btn active-s" id="tabLogin"  onclick="setTab('login')">Login</button>
+      <button class="tab-btn"          id="tabSignup" onclick="setTab('signup')">Sign up</button>
+    </div>
+
+    <div class="alert error"   id="alertErr"></div>
+    <div class="alert success" id="alertOk"></div>
+
+    <!-- ── JS alert box ── -->
+    <div id="mainForm">
+      <input type="hidden" name="role" id="roleInput" value="student">
+
+      <!-- Name — signup only -->
+      <div class="field hidden" id="fieldName">
+        <label>Full Name</label>
+        <input type="text" id="inputName" placeholder="Enter your full name"/>
+      </div>
+
+      <!-- Subject — teacher + signup only -->
+      <div class="field hidden" id="fieldSubject">
+        <label>Subject / Specialization</label>
+        <input type="text" id="inputSubject" placeholder="e.g. Machine Learning, Data Science"/>
+      </div>
+
+      <!-- Class Level — student + signup only -->
+      <div class="field hidden" id="fieldClass">
+        <label>Your Class</label>
+        <select id="inputClass" style="width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-family:inherit;font-size:14px;color:#111827;background:#f9fafb;outline:none;transition:all 0.2s;">
+          <option value="">— Select your class —</option>
+          {% for c in class_levels %}
+          <option value="{{ c }}">{{ c }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Email -->
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" id="inputEmail" placeholder="Enter your email"/>
+      </div>
+
+      <!-- Password -->
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" id="inputPw" placeholder="Enter your password"/>
+      </div>
+
+      <!-- Remember + Forgot -->
+      <div class="rf-row" id="rfRow">
+        <label class="remember">
+          <input type="checkbox" id="rememberCb"/> Remember for 30 days
+        </label>
+        <button type="button" class="forgot-btn" id="forgotBtn" onclick="showForgot()">Forgot password?</button>
+      </div>
+
+      <!-- Confirm — signup only -->
+      <div class="field hidden" id="fieldConfirm">
+        <label>Confirm Password</label>
+        <input type="password" id="inputConfirm" placeholder="Re-enter your password"/>
+      </div>
+
+      <button type="button" class="submit-btn" id="submitBtn" onclick="handleSubmit()">Sign in</button>
+    </div>
+
+    <!-- ── Onboarding Form (Google Login New Users) ── -->
+    <div id="onboardingForm" class="hidden">
+
+      <!-- Role selector inside onboarding -->
+      <div style="margin-bottom:18px;">
+        <label style="display:block;font-size:14px;font-weight:500;color:#374151;margin-bottom:8px;">I am a</label>
+        <div style="display:flex;gap:10px;">
+          <button type="button" id="obRoleStudent" onclick="setObRole('student')"
+            style="flex:1;padding:10px;border-radius:10px;border:2px solid #7c3aed;background:#f5f3ff;color:#6d28d9;font-weight:600;font-size:14px;cursor:pointer;transition:all 0.2s;">
+            🧑‍🎓 Student
+          </button>
+          <button type="button" id="obRoleTeacher" onclick="setObRole('teacher')"
+            style="flex:1;padding:10px;border-radius:10px;border:2px solid #e5e7eb;background:#fff;color:#6b7280;font-weight:600;font-size:14px;cursor:pointer;transition:all 0.2s;">
+            👩‍🏫 Teacher
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="obName" placeholder="Enter your full name"/>
+      </div>
+
+      <div class="field hidden" id="obSubject">
+        <label>Subject / Specialization</label>
+        <input type="text" id="obInputSubject" placeholder="e.g. Mathematics, Science"/>
+      </div>
+
+      <div class="field" id="obClass">
+        <label>Your Class</label>
+        <select id="obInputClass" style="width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-family:inherit;font-size:14px;color:#111827;background:#f9fafb;outline:none;">
+          <option value="">— Select your class —</option>
+          {% for c in class_levels %}
+          <option value="{{ c }}">{{ c }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button type="button" class="submit-btn" id="obSubmitBtn" onclick="submitOnboarding()">Complete Sign Up &rarr;</button>
+    </div>
+
+
+    <!-- ── Social: Google ── -->
+    <div class="divider"><span>or continue with</span></div>
+
+    <!-- ✅ FIXED: Firebase Google popup instead of /login/google -->
+    <button class="google-btn" type="button" onclick="googleLogin()">
+      <svg class="google-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.14 0 5.95 1.08 8.17 2.86l6.1-6.1C34.36 3.09 29.46 1 24 1 14.82 1 7.07 6.48 3.6 14.27l7.1 5.52C12.42 13.63 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.52 24.5c0-1.64-.15-3.22-.42-4.75H24v9h12.7c-.55 2.96-2.2 5.47-4.67 7.16l7.18 5.57C43.34 37.49 46.52 31.44 46.52 24.5z"/>
+        <path fill="#FBBC05" d="M10.7 28.21A14.57 14.57 0 0 1 9.5 24c0-1.47.26-2.9.7-4.21l-7.1-5.52A23.94 23.94 0 0 0 0 24c0 3.88.93 7.55 2.6 10.73l8.1-6.52z"/>
+        <path fill="#34A853" d="M24 47c5.46 0 10.05-1.81 13.41-4.92l-7.18-5.57c-1.87 1.26-4.28 2-6.23 2-6.26 0-11.58-4.13-13.3-9.79l-8.1 6.52C7.07 41.52 14.82 47 24 47z"/>
+        <path fill="none" d="M0 0h48v48H0z"/>
+      </svg>
+      Continue with Google
+    </button>
+
+    <div class="footer-txt" id="footerTxt">
+      Don't have an account? <a class="purple" onclick="setTab('signup')">Sign up</a>
+    </div>
+
+    <div class="teacher-toggle">
+      <button onclick="toggleTeacher()" id="toggleBtn">
+        <span id="tIco">👩‍🏫</span>
+        <span id="tTxt">Login as Teacher</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ══ RIGHT PHOTO ══ -->
+  <div class="photo-side">
+    <img
+      src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1000&q=90&auto=format&fit=crop"
+      alt="Students"
+      onerror="this.src='https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1000&q=85'"
+    />
+    <div class="photo-overlay"></div>
+    <div class="quote-area">
+      <div class="quote-card">
+        <div class="q-stars" id="qStars">★★★★★</div>
+        <div class="q-text"  id="qText">"Education is the most powerful weapon which you can use to change the world."</div>
+        <div class="q-author" id="qAuthor">— Nelson Mandela · AI Learning Path</div>
+        <div class="q-nav">
+          <div class="q-btn" onclick="prevQ()">←</div>
+          <div class="q-btn" onclick="nextQ()">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ✅ Firebase JS SDK (compat version — works with old-style API) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<script>
+// ── Firebase Init ─────────────────────────────────────────────────────────────
+var firebaseConfig = {
+  apiKey:            "AIzaSyDbs0YRjhHXhcCXZvYNAwmwDxHYflsWQQo",
+  authDomain:        "ai-learning-app-d51f1.firebaseapp.com",
+  projectId:         "ai-learning-app-d51f1",
+  storageBucket:     "ai-learning-app-d51f1.firebasestorage.app",
+  messagingSenderId: "139779289856",
+  appId:             "1:139779289856:web:0eb0c25f6d888302c539e5"
+};
+firebase.initializeApp(firebaseConfig);
+var firebaseAuth = firebase.auth();
+
+// ── Google Login ──────────────────────────────────────────────────────────────
+// ✅ FIXED: Uses Firebase popup → sends idToken to /firebase-login → Flask redirects
+var _googleLoginBusy = false;
+
+async function googleLogin() {
+  if (_googleLoginBusy) return;   // prevent double-click / double popup
+  _googleLoginBusy = true;
+
+  clearAlerts();
+  var btn = document.querySelector('.google-btn');
+  var origHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+  btn.style.cursor  = 'not-allowed';
+
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('email');
+  provider.addScope('profile');
+
+  try {
+    var result = await firebaseAuth.signInWithPopup(provider);
+    var user   = result.user;
+
+    var res  = await fetch('/firebase-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: user.email,
+        uid:   user.uid,
+        name:  user.displayName,
+        role:  mode
+      })
+    });
+    var data = await res.json();
+
+    if (data.success) {
+      if (data.needs_info) {
+        tempGoogleData = data;
+        showOnboarding();
+      } else {
+        window.location.href = data.redirect;
+      }
+    } else {
+      showErr(data.error || 'Google login failed. Please try again.');
+    }
+
+  } catch(e) {
+    var code = e.code || '';
+    if (code === 'auth/cancelled-popup-request' || code === 'auth/popup-closed-by-user') {
+      // User closed the popup — silent, just re-enable the button
+      showErr('Google sign-in was cancelled. Please try again.');
+    } else if (code === 'auth/popup-blocked') {
+      // Browser blocked the popup — fall back to redirect
+      showErr('Popup was blocked. Redirecting to Google sign-in...');
+      setTimeout(function() { firebaseAuth.signInWithRedirect(provider); }, 1200);
+      return;  // don't re-enable button, page will redirect
+    } else if (code === 'auth/network-request-failed') {
+      showErr('Network error. Please check your internet connection and try again.');
+    } else {
+      showErr('Google sign-in failed. Please try again.');
+      console.error('Google login error:', e);
+    }
+  } finally {
+    _googleLoginBusy = false;
+    btn.disabled = false;
+    btn.style.opacity = '';
+    btn.style.cursor  = '';
+  }
+}
+
+// Handle redirect result on page load (for popup-blocked fallback)
+firebaseAuth.getRedirectResult().then(function(result) {
+  if (result && result.user) {
+    var user = result.user;
+    return fetch('/firebase-login', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({
+        email: user.email,
+        uid:   user.uid,
+        name:  user.displayName,
+        role:  mode
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success) {
+        if (data.needs_info) {
+          tempGoogleData = data;
+          showOnboarding();
+        } else {
+          window.location.href = data.redirect;
+        }
+      } else {
+        showErr(data.error || 'Google login failed.');
+      }
+    });
+  }
+}).catch(function(e) {
+  if (e && e.code !== 'auth/no-auth-event') {
+    console.error('Redirect result error:', e);
+  }
+});
+
+var tempGoogleData = null;
+
+var obCurrentRole = 'student'; // tracks role selected in onboarding
+
+function setObRole(r) {
+  obCurrentRole = r;
+  var isT = (r === 'teacher');
+  // Style the buttons
+  document.getElementById('obRoleStudent').style.border   = isT ? '2px solid #e5e7eb' : '2px solid #7c3aed';
+  document.getElementById('obRoleStudent').style.background = isT ? '#fff' : '#f5f3ff';
+  document.getElementById('obRoleStudent').style.color    = isT ? '#6b7280' : '#6d28d9';
+  document.getElementById('obRoleTeacher').style.border   = isT ? '2px solid #2563eb' : '2px solid #e5e7eb';
+  document.getElementById('obRoleTeacher').style.background = isT ? '#eff6ff' : '#fff';
+  document.getElementById('obRoleTeacher').style.color    = isT ? '#1d4ed8' : '#6b7280';
+  // Show/hide fields
+  if (isT) {
+    document.getElementById('obSubject').classList.remove('hidden');
+    document.getElementById('obClass').classList.add('hidden');
+  } else {
+    document.getElementById('obSubject').classList.add('hidden');
+    document.getElementById('obClass').classList.remove('hidden');
+  }
+}
+
+function showOnboarding() {
+  document.getElementById('heading').textContent    = 'Complete Your Profile';
+  document.getElementById('subheading').textContent = 'Just a few more details and you\'re in!';
+
+  document.getElementById('mainForm').classList.add('hidden');
+  document.querySelector('.divider').classList.add('hidden');
+  document.querySelector('.google-btn').classList.add('hidden');
+  document.querySelector('.footer-txt').classList.add('hidden');
+  document.querySelector('.teacher-toggle').classList.add('hidden');
+  document.querySelector('.tabs').classList.add('hidden');
+
+  document.getElementById('onboardingForm').classList.remove('hidden');
+  document.getElementById('obName').value = tempGoogleData.name || '';
+
+  // Apply the role that came from server (preserve existing user role)
+  var initRole = (tempGoogleData.role === 'teacher') ? 'teacher' : 'student';
+  setObRole(initRole);
+}
+
+async function submitOnboarding() {
+  clearAlerts();
+  var name    = document.getElementById('obName').value.trim();
+  var subject = document.getElementById('obInputSubject').value.trim();
+  var classLv = document.getElementById('obInputClass').value;
+
+  if (!name) { showErr('Please enter your full name!'); return; }
+  if (obCurrentRole === 'teacher' && !subject) { showErr('Please enter your subject / specialization!'); return; }
+  if (obCurrentRole === 'student' && !classLv)  { showErr('Please select your class!'); return; }
+
+  var payload = {
+    email:       tempGoogleData.email,
+    uid:         tempGoogleData.uid,
+    name:        name,
+    role:        obCurrentRole,
+    subject:     subject,
+    class_level: classLv
+  };
+
+  var btn = document.getElementById('obSubmitBtn');
+  btn.textContent = 'Saving...';
+  btn.classList.add('loading');
+
+  try {
+    var res  = await fetch('/firebase-register', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    });
+    var data = await res.json();
+    if (data.success) {
+      window.location.href = data.redirect;
+    } else {
+      showErr(data.error || 'Something went wrong.');
+      btn.textContent = 'Complete Sign Up →';
+      btn.classList.remove('loading');
+    }
+  } catch(e) {
+    showErr('Network error. Please try again.');
+    btn.textContent = 'Complete Sign Up →';
+    btn.classList.remove('loading');
+  }
+}
+
+// ── Email/Password Submit ─────────────────────────────────────────────────────
+// ✅ FIXED: Uses fetch → POST JSON to /login or /register → Flask returns redirect URL
+async function handleSubmit() {
+  clearAlerts();
+
+  var email    = document.getElementById('inputEmail').value.trim();
+  var password = document.getElementById('inputPw').value;
+
+  if (!email)                { showErr('Please enter your email!'); return; }
+  if (!validateEmail(email)) { showErr('Please enter a valid email!'); return; }
+  if (!password)             { showErr('Please enter your password!'); return; }
+
+  var payload = {
+    email:    email,
+    password: password,
+    role:     mode,
+    remember: document.getElementById('rememberCb').checked ? 'on' : ''
+  };
+
+  if (tab === 'signup') {
+    var name    = document.getElementById('inputName').value.trim();
+    var confirm = document.getElementById('inputConfirm').value;
+    var subject = document.getElementById('inputSubject').value.trim();
+    var classLv = document.getElementById('inputClass').value;
+    if (!name)                { showErr('Please enter your full name!'); return; }
+    if (mode === 'student' && !classLv) { showErr('Please select your class!'); return; }
+    if (password.length < 6)  { showErr('Password must be at least 6 characters!'); return; }
+    if (password !== confirm) { showErr('Passwords do not match!'); return; }
+    payload.name        = name;
+    payload.subject     = subject;
+    payload.class_level = classLv;
+  }
+
+  var btn = document.getElementById('submitBtn');
+  btn.textContent = tab === 'signup' ? 'Creating account...' : 'Signing in...';
+  btn.classList.add('loading');
+
+  try {
+    // ✅ login → /login,  signup → /register
+    var url = tab === 'signup' ? '/register' : '/login';
+    var res  = await fetch(url, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    });
+    var data = await res.json();
+
+    if (data.success) {
+      if (data.message) {
+        showOk(data.message);
+        setTab('login');
+        document.getElementById('inputPw').value = '';
+        btn.textContent = 'Sign in';
+        btn.classList.remove('loading');
+      } else {
+        window.location.href = data.redirect;  // /student/dashboard or /teacher/dashboard
+      }
+    } else {
+      showErr(data.error || 'Something went wrong. Please try again.');
+      btn.textContent = tab === 'signup' ? 'Create account' : 'Sign in';
+      btn.classList.remove('loading');
+    }
+  } catch(e) {
+    showErr('Network error. Please try again.');
+    btn.textContent = tab === 'signup' ? 'Create account' : 'Sign in';
+    btn.classList.remove('loading');
+  }
+}
+
+function validateEmail(e) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+}
+
+function showForgot() {
+  showOk('Password reset link sent to your email!');
+}
+
+// ─── MODE (Student / Teacher) ───────────────────────────────────────────────
+var mode = 'student';
+var tab  = 'login';
+var qi   = 0;
+
+function toggleTeacher() {
+  setMode(mode === 'student' ? 'teacher' : 'student');
+}
+
+function setMode(m) {
+  mode = m;
+  var isT = m === 'teacher';
+
+  var badge = document.getElementById('roleBadge');
+  badge.textContent = isT ? '👩‍🏫 Teacher' : '👨‍🎓 Student';
+  badge.className = 'badge' + (isT ? ' teacher' : '');
+
+  document.getElementById('tIco').textContent = isT ? '👨‍🎓' : '👩‍🏫';
+  document.getElementById('tTxt').textContent = isT ? 'Switch to Student Login' : '👩‍🏫 Login as Teacher';
+  document.getElementById('submitBtn').className = 'submit-btn' + (isT ? ' blue' : '');
+  document.getElementById('forgotBtn').className = 'forgot-btn' + (isT ? ' blue' : '');
+  document.getElementById('rememberCb').className = isT ? 'blue-check' : '';
+  document.getElementById('roleInput').value = isT ? 'teacher' : 'student';
+
+  // ✅ FIXED: Update toggle button style to show current mode clearly
+  var toggleBtn = document.getElementById('toggleBtn');
+  toggleBtn.className = isT ? 'teacher-active' : 'student-active';
+
+  var inputs = document.querySelectorAll('#mainForm input[type="email"], #mainForm input[type="password"], #mainForm input[type="text"]');
+  inputs.forEach(function(inp) { inp.className = isT ? 'blue' : ''; });
+
+  document.getElementById('fieldSubject').className = (isT && tab === 'signup') ? 'field' : 'field hidden';
+  document.getElementById('fieldClass').className   = (!isT && tab === 'signup') ? 'field' : 'field hidden';
+
+  refreshTabs();
+  refreshText();
+  clearAlerts();
+}
+
+// ─── TAB (Login / Signup) ───────────────────────────────────────────────────
+function setTab(t) {
+  tab = t;
+  var isS = t === 'signup';
+  var isT = mode === 'teacher';
+
+  document.getElementById('fieldName').className    = isS ? 'field' : 'field hidden';
+  document.getElementById('fieldConfirm').className = isS ? 'field' : 'field hidden';
+  document.getElementById('rfRow').className        = isS ? 'rf-row hidden' : 'rf-row';
+  document.getElementById('fieldSubject').className = (isS && isT) ? 'field' : 'field hidden';
+  document.getElementById('fieldClass').className   = (isS && !isT) ? 'field' : 'field hidden';
+
+  refreshTabs();
+  refreshText();
+  clearAlerts();
+}
+
+function refreshTabs() {
+  var isT = mode === 'teacher';
+  var ac  = isT ? 'active-t' : 'active-s';
+  document.getElementById('tabLogin').className  = 'tab-btn' + (tab === 'login'  ? ' ' + ac : '');
+  document.getElementById('tabSignup').className = 'tab-btn' + (tab === 'signup' ? ' ' + ac : '');
+}
+
+function refreshText() {
+  var isT = mode === 'teacher';
+  var isS = tab  === 'signup';
+  var role = isT ? 'Teacher' : 'Student';
+  var linkClass = isT ? 'blue' : 'purple';
+
+  document.getElementById('heading').textContent    = isS ? 'Create ' + role + ' Account' : 'Welcome back';
+  document.getElementById('subheading').textContent = isS
+    ? 'Join as a ' + role.toLowerCase() + ' and start your journey.'
+    : 'Welcome back! Please enter your details.';
+  document.getElementById('submitBtn').textContent  = isS ? 'Create account' : 'Sign in';
+
+  var ft = document.getElementById('footerTxt');
+  ft.innerHTML = isS
+    ? 'Already have an account? <a class="' + linkClass + '" onclick="setTab(\'login\')">Login here</a>'
+    : 'Don\'t have an account? <a class="' + linkClass + '" onclick="setTab(\'signup\')">Sign up</a>';
+}
+
+// ─── QUOTES ─────────────────────────────────────────────────────────────────
+var QUOTES = [
+  { t: '"Education is the most powerful weapon which you can use to change the world."', a: '— Nelson Mandela',    c: '#a78bfa' },
+  { t: '"The beautiful thing about learning is that no one can take it away from you."', a: '— B.B. King',         c: '#60a5fa' },
+  { t: '"Live as if you were to die tomorrow. Learn as if you were to live forever."',   a: '— Mahatma Gandhi',    c: '#34d399' },
+  { t: '"An investment in knowledge pays the best interest."',                           a: '— Benjamin Franklin', c: '#f472b6' }
+];
+
+function prevQ() { qi = (qi - 1 + QUOTES.length) % QUOTES.length; renderQ(); }
+function nextQ() { qi = (qi + 1) % QUOTES.length; renderQ(); }
+function renderQ() {
+  var q  = QUOTES[qi];
+  var el = document.getElementById('qText');
+  el.style.opacity = '0';
+  setTimeout(function() {
+    el.textContent = q.t;
+    document.getElementById('qAuthor').textContent = q.a + ' · AI Learning Path';
+    document.getElementById('qStars').style.color  = q.c;
+    el.style.opacity = '1';
+  }, 220);
+}
+setInterval(nextQ, 5000);
+
+// ─── ALERTS ──────────────────────────────────────────────────────────────────
+function showErr(m) {
+  var e = document.getElementById('alertErr');
+  e.textContent = m; e.classList.add('show');
+  setTimeout(function() { e.classList.remove('show'); }, 4000);
+}
+function showOk(m) {
+  var e = document.getElementById('alertOk');
+  e.textContent = m; e.classList.add('show');
+  setTimeout(function() { e.classList.remove('show'); }, 4000);
+}
+function clearAlerts() {
+  document.getElementById('alertErr').classList.remove('show');
+  document.getElementById('alertOk').classList.remove('show');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleSubmit();
+});
+
+// Init
+setMode('student');
+setTab('{{ active_tab|default("login") }}');
+renderQ();
+</script>
+</body>
+</html>

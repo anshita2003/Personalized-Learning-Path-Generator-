@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Students — Teacher Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#2563eb;--primary-bg:#eff6ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#3b82f6;--primary-bg:rgba(59,130,246,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}
+.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px}.nav-sec{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.nav-a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}
+.nav-a:hover{color:var(--text);background:var(--surface2)}.nav-a.on{color:var(--primary);background:var(--primary-bg);font-weight:600}
+.ni{font-size:15px;width:20px;text-align:center}
+.sfoot{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}
+.uav{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.unm{font-size:12.5px;font-weight:600;color:var(--text)}.url{font-size:11px;color:var(--text3)}
+.logbtn{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}
+.logbtn:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}
+.page-sub{font-size:13px;color:var(--text2)}
+.topbar-r{display:flex;align-items:center;gap:10px}
+.search-wrap{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 14px}
+.search-wrap:focus-within{border-color:var(--primary)}
+.search-wrap input{background:transparent;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--text);width:190px}
+.search-wrap input::placeholder{color:var(--text3)}
+.ttoggle{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.ftabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.ft{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:.15s}
+.ft:hover{color:var(--text)}.ft.on{background:var(--primary-bg);border-color:var(--primary);color:var(--primary)}
+.ft-cnt{font-size:11px;background:var(--surface2);padding:1px 6px;border-radius:99px;margin-left:5px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;box-shadow:var(--shadow);transition:.2s}
+.scard:hover{transform:translateY(-2px);border-color:var(--primary)}
+.sc-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sc-av{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
+.sc-nm{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px}
+.sc-em{font-size:12px;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700}
+.sc-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.ss{background:var(--surface2);border-radius:8px;padding:9px;text-align:center}
+.ss-val{font-size:17px;font-weight:700;line-height:1;margin-bottom:2px}
+.ss-lbl{font-size:10px;color:var(--text3);font-weight:600}
+.bar-bg{height:5px;background:var(--surface3);border-radius:99px;overflow:hidden;margin-bottom:12px}
+.bar-fill{height:100%;border-radius:99px}
+.sc-btns{display:flex;gap:7px}
+.scb{flex:1;padding:7px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;text-align:center;border:none;transition:.15s}
+.scb-p{background:var(--primary-bg);color:var(--primary);border:1px solid var(--primary)}.scb-p:hover{background:var(--primary);color:#fff}
+.scb-g{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}.scb-g:hover{color:var(--text)}
+/* MODAL */
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.mbg.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;width:450px;max-height:80vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.2)}
+.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.mt{font-size:16px;font-weight:700;color:var(--text)}
+.mc{width:30px;height:30px;border-radius:7px;background:var(--surface2);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text2)}
+.mc:hover{color:var(--danger)}
+.dr{display:flex;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.dr:last-child{border:none}.dl{color:var(--text2);width:130px;flex-shrink:0}.dv{font-weight:600;color:var(--text)}
+.mbar{margin-top:14px}
+.mbar-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px}
+.mbi{margin-bottom:10px}
+.mbi-row{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:4px}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Teacher Portal</div></div></div>
+  <nav class="nav">
+    <div class="nav-sec">Overview</div>
+    <a href="/teacher/dashboard" class="nav-a"><span class="ni">📊</span> Dashboard</a>
+    <a href="/teacher/students" class="nav-a on"><span class="ni">👥</span> My Students</a>
+    <a href="/teacher/reports" class="nav-a"><span class="ni">📈</span> Reports</a>
+    <div class="nav-sec">Classroom</div>
+    <a href="/teacher/quiz/General" class="nav-a"><span class="ni">✏️</span> Manage Quiz</a>
+    <a href="/teacher/chatbot" class="nav-a"><span class="ni">🤖</span> AI Assistant</a>
+    <div class="nav-sec">Account</div>
+    <a href="/teacher/profile" class="nav-a"><span class="ni">👤</span> My Profile</a>
+  </nav>
+  <div class="sfoot">
+    <div class="uav">AS</div>
+    <div><div class="unm">Mrs. Ashima Sood</div><div class="url">Teacher</div></div>
+    <a href="/logout" class="logbtn">⇥</a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div><div class="page-title">My Students</div><div class="page-sub">3 students registered in total</div></div>
+    <div class="topbar-r">
+      <div class="search-wrap"><span>🔍</span><input type="text" id="searchIn" placeholder="Search students..." oninput="filterCards()"/></div>
+      <button class="ttoggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    </div>
+  </div>
+
+  <div class="ftabs">
+    <div class="ft on" onclick="setF('all',this)">All <span class="ft-cnt">3</span></div>
+    <div class="ft" onclick="setF('strong',this)">Strong ≥80% <span class="ft-cnt" id="cS">0</span></div>
+    <div class="ft" onclick="setF('avg',this)">Average 60–79% <span class="ft-cnt" id="cA">0</span></div>
+    <div class="ft" onclick="setF('weak',this)">Needs Help &lt;60% <span class="ft-cnt" id="cW">0</span></div>
+  </div>
+
+  <div class="cards" id="cardsGrid">
+    <!-- Aman Kumar — Strong -->
+    <div class="scard" data-avg="85" data-name="aman kumar">
+      <div class="sc-top">
+        <div class="sc-av" style="background:#6366f1">AK</div>
+        <div style="flex:1;min-width:0"><div class="sc-nm">Aman Kumar</div><div class="sc-em">aman@student.com</div></div>
+        <span class="pill" style="background:#d1fae5;color:#065f46">Strong</span>
+      </div>
+      <div class="sc-stats">
+        <div class="ss"><div class="ss-val" style="color:#059669">85%</div><div class="ss-lbl">Avg Score</div></div>
+        <div class="ss"><div class="ss-val" style="color:var(--primary)">6</div><div class="ss-lbl">Quizzes</div></div>
+        <div class="ss"><div class="ss-val" style="color:var(--text2)">Mar</div><div class="ss-lbl">Joined</div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:5px;color:var(--text2)"><span>Progress</span><span style="color:#059669">85%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:85%;background:#059669"></div></div>
+      <div class="sc-btns">
+        <button class="scb scb-p" onclick="openModal('Aman Kumar','aman@student.com','85','6','Mar 10, 2026')">📊 Details</button>
+        <button class="scb scb-g">📧 Message</button>
+      </div>
+    </div>
+
+    <!-- Anshita Goel — Average -->
+    <div class="scard" data-avg="68" data-name="anshita goel">
+      <div class="sc-top">
+        <div class="sc-av" style="background:#10b981">AG</div>
+        <div style="flex:1;min-width:0"><div class="sc-nm">Anshita Goel</div><div class="sc-em">anshita@student.com</div></div>
+        <span class="pill" style="background:#fef3c7;color:#92400e">Average</span>
+      </div>
+      <div class="sc-stats">
+        <div class="ss"><div class="ss-val" style="color:#d97706">68%</div><div class="ss-lbl">Avg Score</div></div>
+        <div class="ss"><div class="ss-val" style="color:var(--primary)">5</div><div class="ss-lbl">Quizzes</div></div>
+        <div class="ss"><div class="ss-val" style="color:var(--text2)">Mar</div><div class="ss-lbl">Joined</div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:5px;color:var(--text2)"><span>Progress</span><span style="color:#d97706">68%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:68%;background:#d97706"></div></div>
+      <div class="sc-btns">
+        <button class="scb scb-p" onclick="openModal('Anshita Goel','anshita@student.com','68','5','Mar 11, 2026')">📊 Details</button>
+        <button class="scb scb-g">📧 Message</button>
+      </div>
+    </div>
+
+    <!-- Darpan Yaduvanshi — Needs Help -->
+    <div class="scard" data-avg="52" data-name="darpan yaduvanshi">
+      <div class="sc-top">
+        <div class="sc-av" style="background:#f59e0b">DY</div>
+        <div style="flex:1;min-width:0"><div class="sc-nm">Darpan Yaduvanshi</div><div class="sc-em">darpan@student.com</div></div>
+        <span class="pill" style="background:#fee2e2;color:#991b1b">Needs Help</span>
+      </div>
+      <div class="sc-stats">
+        <div class="ss"><div class="ss-val" style="color:#dc2626">52%</div><div class="ss-lbl">Avg Score</div></div>
+        <div class="ss"><div class="ss-val" style="color:var(--primary)">3</div><div class="ss-lbl">Quizzes</div></div>
+        <div class="ss"><div class="ss-val" style="color:var(--text2)">Mar</div><div class="ss-lbl">Joined</div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:5px;color:var(--text2)"><span>Progress</span><span style="color:#dc2626">52%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:52%;background:#dc2626"></div></div>
+      <div class="sc-btns">
+        <button class="scb scb-p" onclick="openModal('Darpan Yaduvanshi','darpan@student.com','52','3','Mar 12, 2026')">📊 Details</button>
+        <button class="scb scb-g">📧 Message</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Modal -->
+<div class="mbg" id="modalBg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="mh"><div class="mt" id="mName">Student Details</div><div class="mc" onclick="closeModal()">✕</div></div>
+    <div class="dr"><span class="dl">📧 Email</span><span class="dv" id="mEmail">—</span></div>
+    <div class="dr"><span class="dl">📅 Joined</span><span class="dv" id="mJoined">—</span></div>
+    <div class="dr"><span class="dl">✅ Quizzes</span><span class="dv" id="mQuizzes">—</span></div>
+    <div class="dr"><span class="dl">🏆 Avg Score</span><span class="dv" id="mAvg">—</span></div>
+    <div class="dr"><span class="dl">📊 Level</span><span class="dv" id="mLevel">—</span></div>
+    <div class="mbar">
+      <div class="mbar-title">Subject Breakdown</div>
+      <div class="mbi"><div class="mbi-row"><span>📐 Mathematics</span><span style="color:#6366f1">82%</span></div><div class="bar-bg"><div class="bar-fill" style="width:82%;background:#6366f1"></div></div></div>
+      <div class="mbi"><div class="mbi-row"><span>🔬 Science</span><span style="color:#10b981">75%</span></div><div class="bar-bg"><div class="bar-fill" style="width:75%;background:#10b981"></div></div></div>
+      <div class="mbi"><div class="mbi-row"><span>📖 English</span><span style="color:#f59e0b">60%</span></div><div class="bar-bg"><div class="bar-fill" style="width:60%;background:#f59e0b"></div></div></div>
+      <div class="mbi"><div class="mbi-row"><span>🏛️ History</span><span style="color:#ef4444">88%</span></div><div class="bar-bg"><div class="bar-fill" style="width:88%;background:#ef4444"></div></div></div>
+      <div class="mbi"><div class="mbi-row"><span>💻 Computer Sci</span><span style="color:#8b5cf6">91%</span></div><div class="bar-bg"><div class="bar-fill" style="width:91%;background:#8b5cf6"></div></div></div>
+      <div class="mbi"><div class="mbi-row"><span>🌍 Geography</span><span style="color:#06b6d4">70%</span></div><div class="bar-bg"><div class="bar-fill" style="width:70%;background:#06b6d4"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){var t=localStorage.getItem('t')||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('t',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙';}
+
+var cards=Array.from(document.querySelectorAll('.scard')),curF='all';
+function countUp(){var s=0,a=0,w=0;cards.forEach(function(c){var v=parseInt(c.dataset.avg);if(v>=80)s++;else if(v>=60)a++;else w++;});document.getElementById('cS').textContent=s;document.getElementById('cA').textContent=a;document.getElementById('cW').textContent=w;}
+countUp();
+function setF(f,el){curF=f;document.querySelectorAll('.ft').forEach(function(t){t.classList.remove('on')});el.classList.add('on');filterCards();}
+function filterCards(){var q=document.getElementById('searchIn').value.toLowerCase();cards.forEach(function(c){var a=parseInt(c.dataset.avg),n=c.dataset.name;var mf=curF==='all'||(curF==='strong'&&a>=80)||(curF==='avg'&&a>=60&&a<80)||(curF==='weak'&&a<60);c.style.display=(mf&&(!q||n.includes(q)))?'':'none';});}
+function openModal(nm,em,av,qz,jn){document.getElementById('mName').textContent=nm;document.getElementById('mEmail').textContent=em;document.getElementById('mJoined').textContent=jn;document.getElementById('mQuizzes').textContent=qz+' quizzes';document.getElementById('mAvg').textContent=av+'%';var a=parseInt(av);document.getElementById('mLevel').textContent=a>=90?'Expert 🏆':a>=70?'Advanced ⚡':a>=50?'Intermediate 📈':'Beginner 🌱';document.getElementById('modalBg').classList.add('open');}
+function closeModal(){document.getElementById('modalBg').classList.remove('open');}
+</script>
+</body>
+</html>

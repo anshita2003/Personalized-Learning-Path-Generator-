@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Subjects — Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#6366f1;--primary-bg:#eef2ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#818cf8;--primary-bg:rgba(99,102,241,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}
+.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px;overflow-y:auto}.nav::-webkit-scrollbar{width:0}
+.ns{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.na{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}
+.na:hover{color:var(--text);background:var(--surface2)}.na.on{color:var(--primary);background:var(--primary-bg);font-weight:600}
+.ni{font-size:15px;width:20px;text-align:center}
+.sfoot{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}
+.uav{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.unm{font-size:12.5px;font-weight:600;color:var(--text)}.url{font-size:11px;color:var(--text3)}
+.lb{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}
+.lb:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}.page-sub{font-size:13px;color:var(--text2)}
+.topbar-r{display:flex;align-items:center;gap:10px}
+.tt{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.ct{font-size:14px;font-weight:700;color:var(--text)}
+.ca{font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;padding:5px 12px;border-radius:7px;border:1px solid var(--primary)}.ca:hover{background:var(--primary-bg)}
+.bar-bg{height:5px;background:var(--surface3);border-radius:99px;overflow:hidden}.bar-fill{height:100%;border-radius:99px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.toast{position:fixed;bottom:22px;right:22px;padding:12px 18px;border-radius:10px;font-size:13.5px;font-weight:600;display:none;z-index:999;background:var(--success);color:#fff}
+.ftabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.ft{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:.15s}
+.ft:hover{color:var(--text)}.ft.on{background:var(--primary-bg);border-color:var(--primary);color:var(--primary)}
+.subjs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.sjbig{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);transition:.2s;position:relative;overflow:hidden}
+.sjbig:hover{transform:translateY(-2px);border-color:var(--primary)}
+.sjbig::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.sbig-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sbig-ic{font-size:28px}.sbig-tag{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px}
+.sbig-name{font-size:16px;font-weight:700;color:var(--text);margin-bottom:5px}
+.sbig-score{font-size:28px;font-weight:700;margin-bottom:8px}
+.topics{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.topic{font-size:11px;padding:3px 9px;border-radius:99px;background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+.topic.weak{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+[data-theme="dark"] .topic.weak{background:rgba(220,38,38,.15);color:#fca5a5;border-color:rgba(220,38,38,.3)}
+.quiz-link{display:block;text-align:center;padding:9px;background:var(--primary-bg);border:1px solid var(--primary);border-radius:9px;color:var(--primary);font-size:13px;font-weight:700;text-decoration:none;margin-top:4px;transition:.15s}
+.quiz-link:hover{background:var(--primary);color:#fff}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Student Portal</div></div></div>
+  <nav class="nav">
+    <div class="ns">Main</div>
+    <a href="/student/dashboard" class="na "><span class="ni">📊</span> Dashboard</a>
+    <a href="/student/subjects" class="na on"><span class="ni">📚</span> Subjects</a>
+    <a href="/student/quiz/General" class="na "><span class="ni">✏️</span> Take Quiz</a>
+    <div class="ns">Learning</div>
+    <a href="/student/path" class="na "><span class="ni">🗺️</span> Learning Path</a>
+    <a href="/student/notes" class="na "><span class="ni">📝</span> AI Notes</a>
+    <a href="/student/chatbot" class="na "><span class="ni">🤖</span> AI Chatbot</a>
+    <div class="ns">Account</div>
+    <a href="/student/profile" class="na "><span class="ni">👤</span> Profile</a>
+  </nav>
+  <div class="sfoot">
+    <div class="uav">AK</div>
+    <div><div class="unm">Aman Kumar</div><div class="url">Student · Class 11</div></div>
+    <a href="/logout" class="lb">⇥</a>
+  </div>
+</aside>
+<main class="main">
+  <div class="topbar">
+    <div><div class="page-title">Subjects</div><div class="page-sub">Your progress across all 6 subjects</div></div>
+    <div class="topbar-r"><button class="tt" id="themeBtn" onclick="toggleTheme()">🌙</button></div>
+  </div>
+  <div class="ftabs">
+    <div class="ft on" onclick="setF('all',this)">All</div>
+    <div class="ft" onclick="setF('attempted',this)">Attempted</div>
+    <div class="ft" onclick="setF('strong',this)">Strong</div>
+    <div class="ft" onclick="setF('weak',this)">Needs Work</div>
+  </div>
+  <div class="subjs-grid" id="subjsGrid">
+    <div class="sjbig" data-status="strong" style="--col:#6366f1"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:#6366f1"></div><div class="sbig-top"><span class="sbig-ic">📐</span><span class="sbig-tag" style="background:#eef2ff;color:#4338ca">Strong</span></div><div class="sbig-name">Mathematics</div><div class="sbig-score" style="color:#6366f1">82%</div><div class="bar-bg" style="margin-bottom:10px"><div class="bar-fill" style="width:82%;background:#6366f1"></div></div><div class="topics"><span class="topic">Algebra</span><span class="topic">Calculus</span><span class="topic weak">Trigonometry</span><span class="topic">Statistics</span></div><a href="/student/quiz/General" class="quiz-link">✏️ Take Quiz</a></div>
+    <div class="sjbig" data-status="strong" style="--col:#10b981"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:#10b981"></div><div class="sbig-top"><span class="sbig-ic">🔬</span><span class="sbig-tag" style="background:#d1fae5;color:#065f46">Good</span></div><div class="sbig-name">Science</div><div class="sbig-score" style="color:#10b981">75%</div><div class="bar-bg" style="margin-bottom:10px"><div class="bar-fill" style="width:75%;background:#10b981"></div></div><div class="topics"><span class="topic">Physics</span><span class="topic">Chemistry</span><span class="topic weak">Organic Chem</span><span class="topic">Biology</span></div><a href="/student/quiz/General" class="quiz-link">✏️ Take Quiz</a></div>
+    <div class="sjbig" data-status="weak"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:#d97706"></div><div class="sbig-top"><span class="sbig-ic">📖</span><span class="sbig-tag" style="background:#fef3c7;color:#92400e">Needs Work</span></div><div class="sbig-name">English</div><div class="sbig-score" style="color:#d97706">60%</div><div class="bar-bg" style="margin-bottom:10px"><div class="bar-fill" style="width:60%;background:#d97706"></div></div><div class="topics"><span class="topic weak">Grammar</span><span class="topic weak">Writing</span><span class="topic">Reading</span><span class="topic weak">Comprehension</span></div><a href="/student/quiz/General" class="quiz-link">✏️ Take Quiz</a></div>
+    <div class="sjbig" data-status="strong"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:#ef4444"></div><div class="sbig-top"><span class="sbig-ic">🏛️</span><span class="sbig-tag" style="background:#fee2e2;color:#991b1b">Strong</span></div><div class="sbig-name">History</div><div class="sbig-score" style="color:#ef4444">88%</div><div class="bar-bg" style="margin-bottom:10px"><div class="bar-fill" style="width:88%;background:#ef4444"></div></div><div class="topics"><span class="topic">Ancient India</span><span class="topic">Mughal Era</span><span class="topic weak">Medieval</span><span class="topic">Modern India</span></div><a href="/student/quiz/General" class="quiz-link">✏️ Take Quiz</a></div>
+    <div class="sjbig" data-status="strong"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:#8b5cf6"></div><div class="sbig-top"><span class="sbig-ic">💻</span><span class="sbig-tag" style="background:#ede9fe;color:#5b21b6">Expert</span></div><div class="sbig-name">Computer Science</div><div class="sbig-score" style="color:#8b5cf6">91%</div><div class="bar-bg" style="margin-bottom:10px"><div class="bar-fill" style="width:91%;background:#8b5cf6"></div></div><div class="topics"><span class="topic">Python</span><span class="topic">Arrays</span><span class="topic">Loops</span><span class="topic">Data Structures</span></div><a href="/student/quiz/General" class="quiz-link">✏️ Take Quiz</a></div>
+    <div class="sjbig" data-status="weak"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:#06b6d4"></div><div class="sbig-top"><span class="sbig-ic">🌍</span><span class="sbig-tag" style="background:#cffafe;color:#155e75">Needs Work</span></div><div class="sbig-name">Geography</div><div class="sbig-score" style="color:#06b6d4">70%</div><div class="bar-bg" style="margin-bottom:10px"><div class="bar-fill" style="width:70%;background:#06b6d4"></div></div><div class="topics"><span class="topic">Indian Rivers</span><span class="topic weak">Climate</span><span class="topic weak">Map Work</span><span class="topic">Continents</span></div><a href="/student/quiz/General" class="quiz-link">✏️ Take Quiz</a></div>
+  </div>
+</main>
+<script>
+(function(){var t=localStorage.getItem('t')||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('t',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙';}
+function showToast(m){var t=document.getElementById('toastEl');if(!t)return;t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},3000);}
+var curF='all';
+function setF(f,el){curF=f;document.querySelectorAll('.ft').forEach(function(t){t.classList.remove('on')});el.classList.add('on');document.querySelectorAll('.sjbig').forEach(function(c){var s=c.dataset.status;var show=(f==='all')||(f==='attempted')||(f==='strong'&&s==='strong')||(f==='weak'&&s==='weak');c.style.display=show?'':'none';}); }
+</script>
+</body></html>

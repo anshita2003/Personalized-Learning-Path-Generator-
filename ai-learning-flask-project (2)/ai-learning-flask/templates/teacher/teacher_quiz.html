@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Manage Quiz — Teacher Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#2563eb;--primary-bg:#eff6ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#3b82f6;--primary-bg:rgba(59,130,246,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px}.ns{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.na{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}.na:hover{color:var(--text);background:var(--surface2)}.na.on{color:var(--primary);background:var(--primary-bg);font-weight:600}.ni{font-size:15px;width:20px;text-align:center}
+.sf{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}.ua{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}.un{font-size:12.5px;font-weight:600;color:var(--text)}.ur{font-size:11px;color:var(--text3)}.lb{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}.lb:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.pt{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}.ps{font-size:13px;color:var(--text2)}.tt{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow)}.ct{font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px}
+.subj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}.ss{border:2px solid var(--border);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:.2s;background:var(--surface)}.ss:hover{border-color:var(--primary);background:var(--primary-bg)}.ss.on{border-color:var(--primary);background:var(--primary-bg)}.si{font-size:24px;margin-bottom:6px}.sn{font-size:13px;font-weight:600;color:var(--text)}.sc{font-size:11px;color:var(--text3);margin-top:2px}
+.qblock{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}.qn{display:inline-block;background:var(--primary);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;margin-bottom:10px}.ql{font-size:11.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.qtxt{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--text);outline:none;resize:vertical;margin-bottom:10px}.qtxt:focus{border-color:var(--primary)}.qtxt::placeholder{color:var(--text3)}
+.orow{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:8px;margin-bottom:6px}.or{width:15px;height:15px;accent-color:var(--primary);cursor:pointer}.oi{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:7px 11px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;width:100%}.oi:focus{border-color:var(--primary)}.oi::placeholder{color:var(--text3)}
+.add-btn{width:100%;padding:11px;border:2px dashed var(--border);border-radius:9px;background:transparent;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;margin-bottom:12px;transition:.2s}.add-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-bg)}
+.save-btn{width:100%;padding:12px;border:none;border-radius:9px;background:var(--primary);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:.2s}.save-btn:hover{opacity:.9}
+.qi{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;transition:.15s}.qi:hover{border-color:var(--primary)}.qii{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}.qit{font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:2px}.qim{font-size:12px;color:var(--text3)}.qis{font-size:16px;font-weight:700;min-width:44px;text-align:right}.qibtns{display:flex;gap:5px;margin-left:8px}.qibtn{padding:5px 10px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:.15s}
+.toast{position:fixed;bottom:22px;right:22px;padding:12px 18px;border-radius:10px;font-size:13.5px;font-weight:600;display:none;z-index:999;background:var(--success);color:#fff}
+</style></head><body>
+<aside class="sidebar">
+  <div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Teacher Portal</div></div></div>
+  <nav class="nav">
+    <div class="ns">Overview</div>
+    <a href="/teacher/dashboard" class="na"><span class="ni">📊</span> Dashboard</a>
+    <a href="/teacher/students" class="na"><span class="ni">👥</span> My Students</a>
+    <a href="/teacher/reports" class="na"><span class="ni">📈</span> Reports</a>
+    <div class="ns">Classroom</div>
+    <a href="/teacher/quiz/General" class="na on"><span class="ni">✏️</span> Manage Quiz</a>
+    <a href="/teacher/chatbot" class="na"><span class="ni">🤖</span> AI Assistant</a>
+    <div class="ns">Account</div>
+    <a href="/teacher/profile" class="na"><span class="ni">👤</span> My Profile</a>
+  </nav>
+  <div class="sf"><div class="ua">AS</div><div><div class="un">Mrs. Ashima Sood</div><div class="ur">Teacher</div></div><a href="/logout" class="lb">⇥</a></div>
+</aside>
+<main class="main">
+  <div class="topbar"><div><div class="pt">Manage Quiz</div><div class="ps">Create new quizzes and manage existing ones</div></div><button class="tt" id="themeBtn" onclick="toggleTheme()">🌙</button></div>
+  <div style="font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:10px">1. Select Subject</div>
+  <div class="subj-grid">
+    {% for s in subjects %}
+    <div class="ss" onclick="selSubj(this, '{{ s.name }}', '{{ s.color }}')">
+      <div class="si">{{ s.icon }}</div>
+      <div class="sn">{{ s.name }}</div>
+      <div class="sc">5 questions</div>
+    </div>
+    {% endfor %}
+  </div>
+  <div style="font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:12px">2. Create Quiz — <span id="selSub" style="color:var(--primary)">Select a subject above</span></div>
+  <div class="g2" style="align-items:start">
+    <div class="card">
+      <div id="qwrap">
+        <div class="qblock"><span class="qn">Q 1</span><div class="ql">Question</div><textarea class="qtxt" placeholder="Type your question here..." rows="2"></textarea><div class="ql">Options — select correct answer (🔘)</div><div class="orow"><input type="radio" name="c1" class="or"/><input type="text" class="oi" placeholder="Option A"/></div><div class="orow"><input type="radio" name="c1" class="or"/><input type="text" class="oi" placeholder="Option B"/></div><div class="orow"><input type="radio" name="c1" class="or"/><input type="text" class="oi" placeholder="Option C"/></div><div class="orow"><input type="radio" name="c1" class="or"/><input type="text" class="oi" placeholder="Option D"/></div></div>
+        <div class="qblock"><span class="qn">Q 2</span><div class="ql">Question</div><textarea class="qtxt" placeholder="Type your question here..." rows="2"></textarea><div class="ql">Options</div><div class="orow"><input type="radio" name="c2" class="or"/><input type="text" class="oi" placeholder="Option A"/></div><div class="orow"><input type="radio" name="c2" class="or"/><input type="text" class="oi" placeholder="Option B"/></div><div class="orow"><input type="radio" name="c2" class="or"/><input type="text" class="oi" placeholder="Option C"/></div><div class="orow"><input type="radio" name="c2" class="or"/><input type="text" class="oi" placeholder="Option D"/></div></div>
+      </div>
+      <button class="add-btn" onclick="addQ()">+ Add Another Question</button>
+      <button class="save-btn" onclick="saveQ()">💾 Save Quiz</button>
+    </div>
+    <div class="card">
+      <div class="ct">📋 Existing Quizzes</div>
+      <div class="qi"><div class="qii" style="background:#8b5cf622">💻</div><div style="flex:1"><div class="qit">CS — Arrays &amp; Loops</div><div class="qim">16 attempts · 5 questions</div></div><div class="qis" style="color:var(--success)">91%</div><div class="qibtns"><button class="qibtn" style="background:var(--primary-bg);color:var(--primary)" onclick="toast('Edit — coming soon!')">✏️</button><button class="qibtn" style="background:#fee2e2;color:var(--danger)" onclick="toast('Quiz deleted!')">🗑️</button></div></div>
+      <div class="qi"><div class="qii" style="background:#6366f122">📐</div><div style="flex:1"><div class="qit">Math — Quadratic Eq</div><div class="qim">14 attempts · 5 questions</div></div><div class="qis" style="color:var(--warning)">80%</div><div class="qibtns"><button class="qibtn" style="background:var(--primary-bg);color:var(--primary)" onclick="toast('Edit — coming soon!')">✏️</button><button class="qibtn" style="background:#fee2e2;color:var(--danger)" onclick="toast('Quiz deleted!')">🗑️</button></div></div>
+      <div class="qi"><div class="qii" style="background:#ef444422">🏛️</div><div style="flex:1"><div class="qit">History — Mughal Era</div><div class="qim">13 attempts · 5 questions</div></div><div class="qis" style="color:var(--success)">100%</div><div class="qibtns"><button class="qibtn" style="background:var(--primary-bg);color:var(--primary)" onclick="toast('Edit — coming soon!')">✏️</button><button class="qibtn" style="background:#fee2e2;color:var(--danger)" onclick="toast('Quiz deleted!')">🗑️</button></div></div>
+      <div class="qi"><div class="qii" style="background:#f59e0b22">📖</div><div style="flex:1"><div class="qit">English — Grammar</div><div class="qim">9 attempts · 5 questions</div></div><div class="qis" style="color:var(--danger)">60%</div><div class="qibtns"><button class="qibtn" style="background:var(--primary-bg);color:var(--primary)" onclick="toast('Edit — coming soon!')">✏️</button><button class="qibtn" style="background:#fee2e2;color:var(--danger)" onclick="toast('Quiz deleted!')">🗑️</button></div></div>
+      <div class="qi"><div class="qii" style="background:#10b98122">🔬</div><div style="flex:1"><div class="qit">Science — Atoms</div><div class="qim">11 attempts · 5 questions</div></div><div class="qis" style="color:var(--warning)">75%</div><div class="qibtns"><button class="qibtn" style="background:var(--primary-bg);color:var(--primary)" onclick="toast('Edit — coming soon!')">✏️</button><button class="qibtn" style="background:#fee2e2;color:var(--danger)" onclick="toast('Quiz deleted!')">🗑️</button></div></div>
+    </div>
+  </div>
+</main>
+<div class="toast" id="toastEl"></div>
+<script>
+(function(){var t=localStorage.getItem('t')||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('t',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙';}
+var qc=2,sel='';
+function selSubj(el,nm,clr){document.querySelectorAll('.ss').forEach(function(s){s.classList.remove('on')});el.classList.add('on');sel=nm;var sp=document.getElementById('selSub');sp.textContent=nm;sp.style.color=clr;}
+function addQ(){if(!sel){toast('Please select a subject first!');return;}qc++;var d=document.createElement('div');d.className='qblock';d.innerHTML='<span class="qn">Q '+qc+'</span><div class="ql">Question</div><textarea class="qtxt" placeholder="Type your question here..." rows="2"></textarea><div class="ql">Options</div>'+['A','B','C','D'].map(function(o){return '<div class="orow"><input type="radio" name="c'+qc+'" class="or"/><input type="text" class="oi" placeholder="Option '+o+'"/></div>';}).join('');document.getElementById('qwrap').appendChild(d);d.scrollIntoView({behavior:'smooth'});}
+function saveQ(){if(!sel){toast('Please select a subject first!');return;}toast('✅ '+sel+' quiz saved! ('+qc+' questions)');}
+function toast(m){var t=document.getElementById('toastEl');t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},3000);}
+</script>
+</body></html>

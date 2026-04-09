@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Reports — Teacher Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#2563eb;--primary-bg:#eff6ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#3b82f6;--primary-bg:rgba(59,130,246,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}
+.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px}.nav-sec{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.nav-a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}
+.nav-a:hover{color:var(--text);background:var(--surface2)}.nav-a.on{color:var(--primary);background:var(--primary-bg);font-weight:600}
+.ni{font-size:15px;width:20px;text-align:center}
+.sfoot{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}
+.uav{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.unm{font-size:12.5px;font-weight:600;color:var(--text)}.url{font-size:11px;color:var(--text3)}
+.logbtn{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}
+.logbtn:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}
+.page-sub{font-size:13px;color:var(--text2)}
+.ttoggle{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);margin-bottom:18px}
+.ct{font-size:14px;font-weight:700;color:var(--text);margin-bottom:16px}
+.sum-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.sum-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.s1::after{background:linear-gradient(90deg,#2563eb,#60a5fa)}.s2::after{background:linear-gradient(90deg,#059669,#34d399)}.s3::after{background:linear-gradient(90deg,#d97706,#fbbf24)}
+.sl{font-size:11.5px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.sv{font-size:28px;font-weight:700;color:var(--text);line-height:1;margin-bottom:5px}
+.sn{font-size:12px;color:var(--success)}
+/* BAR CHART */
+.barchart{display:flex;align-items:flex-end;gap:10px;height:150px;padding:0 4px;margin-bottom:8px}
+.bcol{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1}
+.bbar{width:100%;border-radius:5px 5px 0 0;cursor:pointer;min-height:4px}
+.bbar:hover{opacity:.8}
+.bval{font-size:11px;font-weight:700;color:var(--text2)}
+.blbl{font-size:10.5px;color:var(--text3);text-align:center;font-weight:500}
+/* DONUT */
+.donut-wrap{display:flex;align-items:center;gap:20px}
+.donut{width:120px;height:120px;border-radius:50%;position:relative;background:conic-gradient(#059669 0% 35%,#2563eb 35% 65%,#d97706 65% 82%,#dc2626 82% 100%);flex-shrink:0}
+.dhole{position:absolute;inset:22px;background:var(--surface);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dhv{font-size:18px;font-weight:700;color:var(--text)}.dhl{font-size:10px;color:var(--text3)}
+.leg{flex:1}.litem{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12.5px}
+.ldot{width:9px;height:9px;border-radius:50%;flex-shrink:0}.llbl{flex:1;color:var(--text2)}.lval{font-weight:700;color:var(--text)}
+/* TABLE */
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:9px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);border-bottom:1px solid var(--border)}
+td{padding:11px 12px;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border)}
+tr:last-child td{border:none}tr:hover td{background:var(--surface2)}
+.tdb{font-weight:600;color:var(--text)}
+.pill{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;display:inline-block}
+.pup{background:#d1fae5;color:#065f46}.pdn{background:#fee2e2;color:#991b1b}.peq{background:#fef3c7;color:#92400e}
+[data-theme="dark"] .pup{background:rgba(5,150,105,.2);color:#6ee7b7}[data-theme="dark"] .pdn{background:rgba(220,38,38,.2);color:#fca5a5}[data-theme="dark"] .peq{background:rgba(217,119,6,.2);color:#fcd34d}
+/* ATTENTION */
+.att-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;margin-bottom:8px}
+.att-av{width:36px;height:36px;border-radius:50%;background:var(--danger);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.att-info{flex:1}.att-nm{font-size:13px;font-weight:700;color:var(--text)}.att-sub{font-size:12px;color:var(--text3)}
+.att-score{font-size:16px;font-weight:700;color:var(--danger)}
+.rev-btn{padding:6px 14px;background:var(--primary-bg);color:var(--primary);border-radius:8px;font-size:12px;font-weight:600;text-decoration:none}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Teacher Portal</div></div></div>
+  <nav class="nav">
+    <div class="nav-sec">Overview</div>
+    <a href="/teacher/dashboard" class="nav-a"><span class="ni">📊</span> Dashboard</a>
+    <a href="/teacher/students" class="nav-a"><span class="ni">👥</span> My Students</a>
+    <a href="/teacher/reports" class="nav-a on"><span class="ni">📈</span> Reports</a>
+    <div class="nav-sec">Classroom</div>
+    <a href="/teacher/quiz/General" class="nav-a"><span class="ni">✏️</span> Manage Quiz</a>
+    <a href="/teacher/chatbot" class="nav-a"><span class="ni">🤖</span> AI Assistant</a>
+    <div class="nav-sec">Account</div>
+    <a href="/teacher/profile" class="nav-a"><span class="ni">👤</span> My Profile</a>
+  </nav>
+  <div class="sfoot">
+    <div class="uav">AS</div>
+    <div><div class="unm">Mrs. Ashima Sood</div><div class="url">Teacher</div></div>
+    <a href="/logout" class="logbtn">⇥</a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div><div class="page-title">Reports &amp; Analytics</div><div class="page-sub">Class performance overview — subject-wise and student-wise</div></div>
+    <button class="ttoggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
+  </div>
+
+  <!-- Summary Stats -->
+  <div class="grid3">
+    <div class="sum-card s1"><div class="sl">Class Average</div><div class="sv">77.7%</div><div class="sn">↑ +3.2% from last week</div></div>
+    <div class="sum-card s2"><div class="sl">Top Score This Week</div><div class="sv">100%</div><div class="sn">CS — Aman Kumar</div></div>
+    <div class="sum-card s3"><div class="sl">Students Registered</div><div class="sv">3</div><div class="sn">14 total quizzes taken</div></div>
+  </div>
+
+  <!-- Bar Chart + Donut -->
+  <div class="grid2">
+    <div class="card" style="margin-bottom:0">
+      <div class="ct">📊 Subject Average Scores</div>
+      <div class="barchart">
+        <div class="bcol"><div class="bval" style="color:#6366f1">82%</div><div class="bbar" style="height:98px;background:#6366f1"></div><div class="blbl">Math</div></div>
+        <div class="bcol"><div class="bval" style="color:#10b981">75%</div><div class="bbar" style="height:90px;background:#10b981"></div><div class="blbl">Science</div></div>
+        <div class="bcol"><div class="bval" style="color:#f59e0b">60%</div><div class="bbar" style="height:72px;background:#f59e0b"></div><div class="blbl">English</div></div>
+        <div class="bcol"><div class="bval" style="color:#ef4444">88%</div><div class="bbar" style="height:106px;background:#ef4444"></div><div class="blbl">History</div></div>
+        <div class="bcol"><div class="bval" style="color:#8b5cf6">91%</div><div class="bbar" style="height:109px;background:#8b5cf6"></div><div class="blbl">CS</div></div>
+        <div class="bcol"><div class="bval" style="color:#06b6d4">70%</div><div class="bbar" style="height:84px;background:#06b6d4"></div><div class="blbl">Geo</div></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="ct">🎯 Score Distribution</div>
+      <div class="donut-wrap">
+        <div class="donut"><div class="dhole"><div class="dhv">3</div><div class="dhl">Students</div></div></div>
+        <div class="leg">
+          <div class="litem"><div class="ldot" style="background:#059669"></div><div class="llbl">Expert (90%+)</div><div class="lval">35%</div></div>
+          <div class="litem"><div class="ldot" style="background:#2563eb"></div><div class="llbl">Advanced (70–89%)</div><div class="lval">30%</div></div>
+          <div class="litem"><div class="ldot" style="background:#d97706"></div><div class="llbl">Intermediate (50–69%)</div><div class="lval">17%</div></div>
+          <div class="litem"><div class="ldot" style="background:#dc2626"></div><div class="llbl">Beginner (&lt;50%)</div><div class="lval">18%</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weekly Table -->
+  <div class="card">
+    <div class="ct">📅 Weekly Subject Summary</div>
+    <table>
+      <thead><tr><th>Subject</th><th>Avg Score</th><th>Quizzes</th><th>Top Student</th><th>Weak Topic</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td class="tdb">📐 Mathematics</td><td style="color:#6366f1;font-weight:700">82%</td><td>14</td><td>Aman Kumar</td><td>Trigonometry</td><td><span class="pill pup">↑ +5%</span></td></tr>
+        <tr><td class="tdb">🔬 Science</td><td style="color:#10b981;font-weight:700">75%</td><td>11</td><td>Anshita G.</td><td>Organic Chem</td><td><span class="pill pup">↑ +2%</span></td></tr>
+        <tr><td class="tdb">📖 English</td><td style="color:#f59e0b;font-weight:700">60%</td><td>9</td><td>Anshita G.</td><td>Grammar</td><td><span class="pill pdn">↓ -3%</span></td></tr>
+        <tr><td class="tdb">🏛️ History</td><td style="color:#ef4444;font-weight:700">88%</td><td>13</td><td>Darpan Y.</td><td>Medieval Era</td><td><span class="pill pup">↑ +8%</span></td></tr>
+        <tr><td class="tdb">💻 Computer Sci</td><td style="color:#8b5cf6;font-weight:700">91%</td><td>16</td><td>Aman Kumar</td><td>—</td><td><span class="pill pup">↑ +4%</span></td></tr>
+        <tr><td class="tdb">🌍 Geography</td><td style="color:#06b6d4;font-weight:700">70%</td><td>8</td><td>Anshita G.</td><td>Climate</td><td><span class="pill peq">→ 0%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Students Needing Attention -->
+  <div class="card">
+    <div class="ct">⚠️ Students Needing Attention</div>
+    <div class="att-item">
+      <div class="att-av">DY</div>
+      <div class="att-info"><div class="att-nm">Darpan Yaduvanshi</div><div class="att-sub">darpan@student.com &middot; Joined Mar 12, 2026</div></div>
+      <div class="att-score">52%</div>
+      <a href="/teacher/students" class="rev-btn">Review →</a>
+    </div>
+  </div>
+</main>
+<script>
+(function(){var t=localStorage.getItem('t')||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('t',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙';}
+</script>
+</body>
+</html>

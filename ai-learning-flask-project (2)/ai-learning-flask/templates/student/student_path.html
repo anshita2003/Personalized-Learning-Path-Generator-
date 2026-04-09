@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Learning Path — Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#6366f1;--primary-bg:#eef2ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#818cf8;--primary-bg:rgba(99,102,241,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px;overflow-y:auto}.nav::-webkit-scrollbar{width:0}.ns{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.na{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}.na:hover{color:var(--text);background:var(--surface2)}.na.on{color:var(--primary);background:var(--primary-bg);font-weight:600}.ni{font-size:15px;width:20px;text-align:center}
+.sfoot{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}.uav{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}.unm{font-size:12.5px;font-weight:600;color:var(--text)}.url{font-size:11px;color:var(--text3)}.lb{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}.lb:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}.page-sub{font-size:13px;color:var(--text2)}.tt{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+
+/* Loading spinner */
+.loading-state{text-align:center;padding:60px 20px}
+.spinner{width:44px;height:44px;border:4px solid var(--surface3);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-txt{font-size:14px;color:var(--text2);font-weight:500}
+
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px}
+.empty-icon{font-size:56px;margin-bottom:16px}
+.empty-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+.empty-sub{font-size:13.5px;color:var(--text2);line-height:1.6;margin-bottom:20px}
+.empty-btn{display:inline-block;padding:11px 24px;background:var(--primary);color:#fff;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;transition:.2s}.empty-btn:hover{opacity:.9}
+
+/* Class badge */
+.class-badge{padding:5px 14px;background:var(--primary-bg);border:1px solid var(--primary);border-radius:99px;font-size:12.5px;font-weight:700;color:var(--primary)}
+
+/* Path cards */
+.path-grid{display:flex;flex-direction:column;gap:14px}
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);transition:.2s}
+.pcard:hover{box-shadow:0 4px 20px rgba(0,0,0,.1);transform:translateY(-1px)}
+.pcard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.pcard-subject{font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+.pcard-score{font-size:13px;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--surface2);color:var(--text2)}
+.pri-badge{font-size:11.5px;font-weight:700;padding:4px 12px;border-radius:99px}
+.pri-critical{background:#fce7f3;color:#9d174d}
+.pri-high{background:#fee2e2;color:#991b1b}
+.pri-medium{background:#fef3c7;color:#92400e}
+.pri-low{background:#d1fae5;color:#065f46}
+.pri-mastered{background:#ede9fe;color:#5b21b6}
+[data-theme="dark"] .pri-critical{background:rgba(157,23,78,.15);color:#fbcfe8}
+[data-theme="dark"] .pri-high{background:rgba(220,38,38,.15);color:#fca5a5}
+[data-theme="dark"] .pri-medium{background:rgba(217,119,6,.15);color:#fcd34d}
+[data-theme="dark"] .pri-low{background:rgba(5,150,105,.15);color:#6ee7b7}
+[data-theme="dark"] .pri-mastered{background:rgba(91,33,182,.15);color:#c4b5fd}
+.pcard-status{font-size:13px;color:var(--text2);margin-bottom:12px;font-style:italic}
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.step-item{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text2);line-height:1.4}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--primary-bg);color:var(--primary);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.pcard-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:12px;flex-wrap:wrap;gap:8px}
+.time-est{font-size:12px;color:var(--text3);font-weight:600}
+.score-bar{height:6px;background:var(--surface3);border-radius:99px;overflow:hidden;flex:1;max-width:120px}
+.score-fill{height:100%;border-radius:99px;transition:width 0.8s ease}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;box-shadow:var(--shadow)}
+.stat-val{font-size:22px;font-weight:700;margin-bottom:3px}
+.stat-lbl{font-size:11.5px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+
+.refresh-btn{display:flex;align-items:center;gap:7px;padding:8px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;transition:.15s}.refresh-btn:hover{color:var(--primary);border-color:var(--primary)}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Student Portal</div></div></div>
+  <nav class="nav">
+    <div class="ns">Main</div>
+    <a href="/student/dashboard" class="na"><span class="ni">📊</span> Dashboard</a>
+    <a href="/student/subjects" class="na"><span class="ni">📚</span> Subjects</a>
+    <a href="/student/quiz/General" class="na"><span class="ni">✏️</span> Take Quiz</a>
+    <div class="ns">Learning</div>
+    <a href="/student/path" class="na on"><span class="ni">🗺️</span> Learning Path</a>
+    <a href="/student/notes" class="na"><span class="ni">📝</span> AI Notes</a>
+    <a href="/student/chatbot" class="na"><span class="ni">🤖</span> AI Chatbot</a>
+    <div class="ns">Account</div>
+    <a href="/student/profile" class="na"><span class="ni">👤</span> Profile</a>
+  </nav>
+  <div class="sfoot">
+    <div class="uav">{{ (user.name or 'U')[0:2]|upper }}</div>
+    <div><div class="unm">{{ user.name }}</div><div class="url">Student &middot; {{ user.class_level or 'No Class' }}</div></div>
+    <a href="/logout" class="lb">&#x21A5;</a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title">🗺️ My Learning Path</div>
+      <div class="page-sub">AI-personalized roadmap for {{ user.class_level or 'your class' }}</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="class-badge">🎓 {{ user.class_level or 'No Class' }}</span>
+      <button class="refresh-btn" onclick="refreshPath()">🔄 Refresh</button>
+      <button class="tt" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    </div>
+  </div>
+
+  {% if not path %}
+  <!-- No quiz taken yet -->
+  <div class="card">
+    <div class="empty-state">
+      <div class="empty-icon">📊</div>
+      <div class="empty-title">Take a Quiz to Generate Your Path!</div>
+      <div class="empty-sub">
+        Your AI learning path is personalized based on your quiz scores.<br>
+        Take at least one quiz to unlock your customized roadmap.
+      </div>
+      <a href="/student/quiz/General" class="empty-btn">✏️ Take Your First Quiz</a>
+    </div>
+  </div>
+  {% else %}
+
+  <!-- Stats summary -->
+  {% set total = path|length %}
+  {% set high_pri = path|selectattr('priority', 'in', ['critical', 'high'])|list|length %}
+  {% set mastered = path|selectattr('priority', 'equalto', 'mastered')|list|length %}
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-val" style="color:var(--primary)">{{ total }}</div>
+      <div class="stat-lbl">Total Subjects</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" style="color:var(--danger)">{{ high_pri }}</div>
+      <div class="stat-lbl">Need Attention</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" style="color:var(--success)">{{ mastered }}</div>
+      <div class="stat-lbl">Mastered</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" style="color:var(--warning)">{{ total - high_pri - mastered }}</div>
+      <div class="stat-lbl">In Progress</div>
+    </div>
+  </div>
+
+  <!-- Path cards from AI -->
+  <div class="path-grid">
+    {% for item in path %}
+    {% set priority = item.priority|lower %}
+    {% set score = item.score|int %}
+    {% set score_color = '#dc2626' if score < 40 else '#d97706' if score < 60 else '#059669' if score >= 75 else '#6366f1' %}
+    <div class="pcard">
+      <div class="pcard-top">
+        <div class="pcard-subject">
+          {% if priority == 'mastered' %}🏆{% elif priority == 'critical' %}🚨{% elif priority == 'high' %}⚠️{% elif priority == 'medium' %}📚{% else %}✅{% endif %}
+          {{ item.subject }}
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="pcard-score">{{ score }}%</div>
+          <div class="pri-badge pri-{{ priority }}">
+            {% if priority == 'critical' %}🔴 Critical{% elif priority == 'high' %}🟠 High{% elif priority == 'medium' %}🟡 Medium{% elif priority == 'low' %}🟢 Low{% else %}⭐ Mastered{% endif %}
+          </div>
+        </div>
+      </div>
+      
+      {% if item.status %}
+      <div class="pcard-status">{{ item.status }}</div>
+      {% endif %}
+
+      <ul class="steps-list">
+        {% for step in item.steps %}
+        <li class="step-item">
+          <div class="step-num">{{ loop.index }}</div>
+          <span>{{ step }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <div class="pcard-footer">
+        <span class="time-est">⏱ {{ item.time_estimate or 'Self-paced' }}</span>
+        <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:flex-end">
+          <div class="score-bar">
+            <div class="score-fill" style="width:{{ score }}%;background:{{ score_color }}"></div>
+          </div>
+          <a href="/student/quiz/{{ item.subject }}" style="font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;padding:5px 12px;border:1px solid var(--primary);border-radius:7px;transition:.15s" onmouseover="this.style.background='var(--primary-bg)'" onmouseout="this.style.background='transparent'">📝 Retake Quiz</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</main>
+
+<script>
+(function(){var t=localStorage.getItem('t')||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('t',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙';}
+function refreshPath(){window.location.reload();}
+
+// Animate score bars on load
+window.addEventListener('load', function() {
+  document.querySelectorAll('.score-fill').forEach(function(bar) {
+    var w = bar.style.width;
+    bar.style.width = '0';
+    setTimeout(function(){ bar.style.width = w; }, 200);
+  });
+});
+</script>
+</body></html>

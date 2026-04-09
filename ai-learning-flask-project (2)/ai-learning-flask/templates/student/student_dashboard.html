@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard — Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#6366f1;--primary-bg:#eef2ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#818cf8;--primary-bg:rgba(99,102,241,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}
+.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px;overflow-y:auto}.nav::-webkit-scrollbar{width:0}
+.ns{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.na{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}
+.na:hover{color:var(--text);background:var(--surface2)}.na.on{color:var(--primary);background:var(--primary-bg);font-weight:600}
+.ni{font-size:15px;width:20px;text-align:center}
+.sfoot{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}
+.uav{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.unm{font-size:12.5px;font-weight:600;color:var(--text)}.url{font-size:11px;color:var(--text3)}
+.lb{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}
+.lb:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}.page-sub{font-size:13px;color:var(--text2)}
+.topbar-r{display:flex;align-items:center;gap:10px}
+.dbadge{font-size:12.5px;color:var(--text2);background:var(--surface);border:1px solid var(--border);padding:7px 14px;border-radius:8px}
+.tt{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;box-shadow:var(--shadow);transition:.2s}
+.sc:hover{transform:translateY(-2px)}.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.s1::after{background:linear-gradient(90deg,#6366f1,#818cf8)}.s2::after{background:linear-gradient(90deg,#059669,#34d399)}.s3::after{background:linear-gradient(90deg,#d97706,#fbbf24)}.s4::after{background:linear-gradient(90deg,#8b5cf6,#a78bfa)}
+.sc-em{font-size:22px;margin-bottom:10px}.sc-val{font-size:30px;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px}.sc-lbl{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}.sc-note{font-size:11.5px;color:var(--success);margin-top:5px}
+.grid21{display:grid;grid-template-columns:3fr 2fr;gap:18px;margin-bottom:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.ct{font-size:14px;font-weight:700;color:var(--text)}
+.ca{font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;padding:5px 12px;border-radius:7px;border:1px solid var(--primary)}.ca:hover{background:var(--primary-bg)}
+.subj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sjcard{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:inherit;display:block;transition:.2s}
+.sjcard:hover{transform:translateY(-2px);border-color:var(--primary)}
+.sic{font-size:22px;margin-bottom:7px}.snm{font-size:12px;font-weight:700;color:var(--text);margin-bottom:5px}
+.sscr{font-size:20px;font-weight:700;margin-bottom:4px}
+.stag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-bottom:6px;display:inline-block}
+.bar-bg{height:4px;background:var(--surface3);border-radius:99px;overflow:hidden}.bar-fill{height:100%;border-radius:99px}
+.ring-wrap{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.ring-svg{width:80px;height:80px;flex-shrink:0}
+.ring-track{fill:none;stroke:var(--surface3);stroke-width:8}
+.ring-fill-c{fill:none;stroke-width:8;stroke-linecap:round;transform-origin:center;transform:rotate(-90deg)}
+.ring-lbl{font-size:16px;font-weight:700;fill:var(--text);text-anchor:middle;dominant-baseline:middle}
+.lvname{font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px}.lvdesc{font-size:12px;color:var(--text2);line-height:1.5}
+.badges-row{display:flex;flex-wrap:wrap;gap:8px}
+.badge-item{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:9px;border:1px solid var(--border);font-size:12px;font-weight:600;color:var(--text2)}
+.badge-item.earned{color:var(--text);border-color:var(--primary);background:var(--primary-bg)}.badge-item.locked{opacity:.4}
+.bic{font-size:16px}
+.hist-list{display:flex;flex-direction:column;gap:8px}
+.hi{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px}
+.hdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.hsub{flex:1;font-size:13px;font-weight:600;color:var(--text)}.hdate{font-size:11px;color:var(--text3)}.hscr{font-size:13px;font-weight:700}.hpct{font-size:11px;color:var(--text3);min-width:36px;text-align:right}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Student Portal</div></div></div>
+  <nav class="nav">
+    <div class="ns">Main</div>
+    <!-- ✅ FIXED: Flask routes, no more .html links -->
+    <a href="/student/dashboard" class="na on"><span class="ni">📊</span> Dashboard</a>
+    <a href="/student/subjects"  class="na"><span class="ni">📚</span> Subjects</a>
+    <a href="/student/subjects"  class="na"><span class="ni">✏️</span> Take Quiz</a>
+    <div class="ns">Learning</div>
+    <a href="/student/path"      class="na"><span class="ni">🗺️</span> Learning Path</a>
+    <a href="/student/notes"     class="na"><span class="ni">📝</span> AI Notes</a>
+    <a href="/student/chatbot"   class="na"><span class="ni">🤖</span> AI Chatbot</a>
+    <div class="ns">Account</div>
+    <a href="/student/profile"   class="na"><span class="ni">👤</span> Profile</a>
+  </nav>
+  <div class="sfoot">
+    <div class="uav">{{ user.name[:2].upper() if user.name else 'U' }}</div>
+    <div>
+      <div class="unm">{{ user.name }}</div>
+      <div class="url">Student</div>
+    </div>
+    <!-- ✅ FIXED: Logout uses Flask route -->
+    <a href="/logout" class="lb" title="Logout">⇥</a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title">Welcome back, {{ user.name.split()[0] }}! 👋</div>
+      <div class="page-sub">
+        {% if results %}
+          You have taken {{ results|length }} quiz{{ 'zes' if results|length != 1 else '' }}. Keep up the momentum!
+        {% else %}
+          Start your first quiz to begin your learning journey!
+        {% endif %}
+      </div>
+    </div>
+    <div class="topbar-r">
+      <div class="dbadge" id="dateBadge">📅 Loading...</div>
+      <button class="tt" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    </div>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="sc s1">
+      <div class="sc-em">🏆</div>
+      <div class="sc-val">{% if scores %}{{ (scores.values()|list|sum / scores|length)|round|int }}%{% else %}0%{% endif %}</div>
+      <div class="sc-lbl">Overall Score</div>
+      <div class="sc-note">↑ Keep it up!</div>
+    </div>
+    <div class="sc s2">
+      <div class="sc-em">✅</div>
+      <div class="sc-val">{{ results|length }}</div>
+      <div class="sc-lbl">Quizzes Taken</div>
+      <div class="sc-note">↑ Great work!</div>
+    </div>
+    <div class="sc s3">
+      <div class="sc-em">⭐</div>
+      <div class="sc-val">{{ user.points or 0 }}</div>
+      <div class="sc-lbl">XP Points</div>
+      <div class="sc-note">↑ Keep earning!</div>
+    </div>
+    <div class="sc s4">
+      <div class="sc-em">🎯</div>
+      <div class="sc-val">{{ user.level or 'Beginner' }}</div>
+      <div class="sc-lbl">Current Level</div>
+      <div class="sc-note">{{ level_name }}</div>
+    </div>
+  </div>
+
+  <div class="grid21">
+    <!-- Subject Overview -->
+    <div class="card">
+      <div class="ch">
+        <div class="ct">📚 Subject Overview</div>
+        <a href="/student/subjects" class="ca">View All</a>
+      </div>
+      <div class="subj-grid">
+        {% if scores %}
+          {% for subject, score in scores.items() %}
+          {% set color = '#059669' if score >= 75 else ('#d97706' if score >= 50 else '#dc2626') %}
+          {% set tag = 'Strong' if score >= 75 else ('Good' if score >= 60 else 'Needs Work') %}
+          <a href="/student/subjects" class="sjcard">
+            <div class="sic">📘</div>
+            <div class="snm">{{ subject }}</div>
+            <div class="sscr" style="color:{{ color }}">{{ score }}%</div>
+            <span class="stag" style="background:{{ color }}22;color:{{ color }}">{{ tag }}</span>
+            <div class="bar-bg"><div class="bar-fill" style="width:{{ score }}%;background:{{ color }}"></div></div>
+          </a>
+          {% endfor %}
+        {% else %}
+          <div style="grid-column:span 3;text-align:center;padding:30px;color:var(--text3)">
+            No quizzes taken yet.<br>
+            <a href="/student/subjects" style="color:var(--primary);font-weight:600">Take your first quiz →</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <!-- AI Skill Level -->
+      <div class="card">
+        <div class="ch"><div class="ct">🤖 AI Skill Level</div></div>
+        <div class="ring-wrap">
+          <svg class="ring-svg" viewBox="0 0 80 80">
+            <circle class="ring-track" cx="40" cy="40" r="32"/>
+            <circle class="ring-fill-c" cx="40" cy="40" r="32" stroke="#6366f1"
+              stroke-dasharray="{{ (conf * 2.01)|round|int }} 226"/>
+            <text class="ring-lbl" x="40" y="40">{{ conf }}</text>
+          </svg>
+          <div>
+            <div class="lvname">{{ level_name }}</div>
+            <div class="lvdesc">Predicted by Deep Learning model.</div>
+            <div style="margin-top:8px;height:5px;background:var(--surface3);border-radius:99px;overflow:hidden">
+              <div style="width:{{ conf }}%;height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6);border-radius:99px"></div>
+            </div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px">{{ user.points or 0 }} XP earned</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="card">
+        <div class="ch">
+          <div class="ct">🏅 Badges</div>
+          <a href="/student/profile" class="ca">All →</a>
+        </div>
+        <div class="badges-row">
+          {% if badges %}
+            {% for badge in badges[:5] %}
+            <div class="badge-item earned"><span class="bic">{{ badge.icon }}</span>{{ badge.name }}</div>
+            {% endfor %}
+          {% else %}
+            <div style="font-size:12px;color:var(--text3)">Complete quizzes to earn badges! 🎯</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Quiz History -->
+  <div class="card">
+    <div class="ch">
+      <div class="ct">📋 Recent Quiz History</div>
+      <a href="/student/profile" class="ca">View All</a>
+    </div>
+    <div class="hist-list">
+      {% if results %}
+        {% for r in results[:5] %}
+        {% set color = '#059669' if r.percentage >= 75 else ('#d97706' if r.percentage >= 50 else '#dc2626') %}
+        <div class="hi">
+          <div class="hdot" style="background:{{ color }}"></div>
+          <div class="hsub">{{ r.subject }}</div>
+          <div class="hdate">{{ r.taken_at.strftime('%d %b') if r.taken_at else '' }}</div>
+          <div class="hscr" style="color:{{ color }}">{{ r.score }}/{{ r.total }}</div>
+          <div class="hpct" style="color:{{ color }}">{{ r.percentage }}%</div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div style="text-align:center;padding:20px;color:var(--text3)">
+          No quiz history yet. <a href="/student/subjects" style="color:var(--primary);font-weight:600">Start now →</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var t = localStorage.getItem('t') || 'light';
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️' : '🌙';
+})();
+function toggleTheme(){
+  var c = document.documentElement.getAttribute('data-theme');
+  var n = c === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', n);
+  localStorage.setItem('t', n);
+  document.getElementById('themeBtn').textContent = n === 'dark' ? '☀️' : '🌙';
+}
+var d = new Date(), dy = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], mn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+document.getElementById('dateBadge').textContent = '📅 ' + dy[d.getDay()] + ', ' + d.getDate() + ' ' + mn[d.getMonth()] + ' ' + d.getFullYear();
+</script>
+</body>
+</html>

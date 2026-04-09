@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Profile — Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#6366f1;--primary-bg:#eef2ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#818cf8;--primary-bg:rgba(99,102,241,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px;overflow-y:auto}.nav::-webkit-scrollbar{width:0}.ns{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.na{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}.na:hover{color:var(--text);background:var(--surface2)}.na.on{color:var(--primary);background:var(--primary-bg);font-weight:600}.ni{font-size:15px;width:20px;text-align:center}
+.sfoot{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}.uav{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}.unm{font-size:12.5px;font-weight:600;color:var(--text)}.url{font-size:11px;color:var(--text3)}.lb{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}.lb:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}.page-sub{font-size:13px;color:var(--text2)}.tt{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.ct{font-size:14px;font-weight:700;color:var(--text)}
+.bar-bg{height:5px;background:var(--surface3);border-radius:99px;overflow:hidden}.bar-fill{height:100%;border-radius:99px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.toast{position:fixed;bottom:22px;right:22px;padding:12px 18px;border-radius:10px;font-size:13.5px;font-weight:600;display:none;z-index:999;background:var(--success);color:#fff}
+
+.grid2{display:grid;grid-template-columns:290px 1fr;gap:20px;align-items:start}
+.phero{text-align:center;padding:24px 20px}
+.pav{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;margin:0 auto 14px;border:3px solid var(--primary-bg)}
+.pnm{font-family:'DM Serif Display',serif;font-size:18px;color:var(--text);margin-bottom:4px}
+.prole{font-size:12.5px;font-weight:600;color:var(--primary);background:var(--primary-bg);padding:4px 12px;border-radius:99px;display:inline-block;margin-bottom:8px}
+.pstats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px}
+.pst{background:var(--surface2);border-radius:9px;padding:10px 6px;text-align:center}.psv{font-size:18px;font-weight:700;color:var(--text)}.psl{font-size:10px;color:var(--text3);margin-top:2px}
+.skill-bars{display:flex;flex-direction:column;gap:10px}
+.sk-row{display:flex;align-items:center;gap:12px}.sk-nm{font-size:13px;font-weight:500;color:var(--text);width:100px;flex-shrink:0}.sk-bar-bg{flex:1;height:6px;background:var(--surface3);border-radius:99px;overflow:hidden}.sk-bar{height:100%;border-radius:99px}.sk-pct{font-size:13px;font-weight:700;min-width:36px;text-align:right}
+.badges-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bdg{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:9px;border:1px solid var(--border)}.bdg.earned{background:var(--primary-bg);border-color:var(--primary)}.bdg.locked{opacity:.45}
+.bic{font-size:20px;flex-shrink:0}.bnm{font-size:12.5px;font-weight:700;color:var(--text)}.bdsc{font-size:11px;color:var(--text3)}.btag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;margin-top:3px;display:inline-block}.te{background:#d1fae5;color:#065f46}.tl{background:var(--surface3);color:var(--text3)}[data-theme="dark"] .te{background:rgba(5,150,105,.2);color:#6ee7b7}
+.ftabs{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
+.ft{padding:6px 13px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--text2);transition:.15s}.ft:hover{color:var(--text)}.ft.on{background:var(--primary-bg);border-color:var(--primary);color:var(--primary)}
+table{width:100%;border-collapse:collapse}th{text-align:left;padding:9px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);border-bottom:1px solid var(--border)}
+td{padding:11px 12px;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border)}tr:last-child td{border:none}tr:hover td{background:var(--surface2)}.tdb{font-weight:600;color:var(--text)}
+
+</style>
+</head>
+<body><aside class="sidebar"><div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Student Portal</div></div></div><nav class="nav"><div class="ns">Main</div><a href="/student/dashboard" class="na"><span class="ni">📊</span> Dashboard</a><a href="/student/subjects" class="na"><span class="ni">📚</span> Subjects</a><a href="/student/quiz/General" class="na"><span class="ni">✏️</span> Take Quiz</a><div class="ns">Learning</div><a href="/student/path" class="na"><span class="ni">🗺️</span> Learning Path</a><a href="/student/notes" class="na"><span class="ni">📝</span> AI Notes</a><a href="/student/chatbot" class="na"><span class="ni">🤖</span> AI Chatbot</a><div class="ns">Account</div><a href="/student/profile" class="na on"><span class="ni">👤</span> Profile</a></nav><div class="sfoot"><div class="uav">AK</div><div><div class="unm">Aman Kumar</div><div class="url">Student &middot; Class 11</div></div><a href="/logout" class="lb">&#x21A5;</a></div></aside>
+<main class="main">
+  <div class="topbar"><div><div class="page-title">My Profile</div><div class="page-sub">Your learning journey and achievements</div></div><button class="tt" id="themeBtn" onclick="toggleTheme()">🌙</button></div>
+  <div class="grid2">
+    <div>
+      <div class="card" style="padding:0;margin-bottom:16px">
+        <div class="phero">
+          <div class="pav">AK</div>
+          <div class="pnm">Aman Kumar</div>
+          <div class="prole">👨‍🎓 Student</div>
+          <div style="font-size:12px;color:var(--text3)">aman@student.com &nbsp;·&nbsp; Class 11</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:4px">Joined March 2026</div>
+          <div class="pstats">
+            <div class="pst"><div class="psv" style="color:var(--primary)">78%</div><div class="psl">Overall</div></div>
+            <div class="pst"><div class="psv" style="color:var(--success)">14</div><div class="psl">Quizzes</div></div>
+            <div class="pst"><div class="psv" style="color:var(--warning)">2400</div><div class="psl">XP</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px">📊 Skill Breakdown</div>
+        <div class="skill-bars">
+          <div class="sk-row"><span class="sk-nm">📐 Math</span><div class="sk-bar-bg"><div class="sk-bar" style="width:82%;background:#6366f1"></div></div><span class="sk-pct" style="color:#6366f1">82%</span></div>
+          <div class="sk-row"><span class="sk-nm">🔬 Science</span><div class="sk-bar-bg"><div class="sk-bar" style="width:75%;background:#10b981"></div></div><span class="sk-pct" style="color:#10b981">75%</span></div>
+          <div class="sk-row"><span class="sk-nm">📖 English</span><div class="sk-bar-bg"><div class="sk-bar" style="width:60%;background:#d97706"></div></div><span class="sk-pct" style="color:#d97706">60%</span></div>
+          <div class="sk-row"><span class="sk-nm">🏛️ History</span><div class="sk-bar-bg"><div class="sk-bar" style="width:88%;background:#ef4444"></div></div><span class="sk-pct" style="color:#ef4444">88%</span></div>
+          <div class="sk-row"><span class="sk-nm">💻 CS</span><div class="sk-bar-bg"><div class="sk-bar" style="width:91%;background:#8b5cf6"></div></div><span class="sk-pct" style="color:#8b5cf6">91%</span></div>
+          <div class="sk-row"><span class="sk-nm">🌍 Geography</span><div class="sk-bar-bg"><div class="sk-bar" style="width:70%;background:#06b6d4"></div></div><span class="sk-pct" style="color:#06b6d4">70%</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px">🏅 Badges</div>
+        <div class="badges-grid">
+          <div class="bdg earned"><span class="bic">🔥</span><div><div class="bnm">Streak 7</div><div class="bdsc">7 day streak</div><span class="btag te">✓ Earned</span></div></div>
+          <div class="bdg earned"><span class="bic">🏆</span><div><div class="bnm">Top Score</div><div class="bdsc">100% in CS</div><span class="btag te">✓ Earned</span></div></div>
+          <div class="bdg earned"><span class="bic">💻</span><div><div class="bnm">CS Master</div><div class="bdsc">91% in CS</div><span class="btag te">✓ Earned</span></div></div>
+          <div class="bdg earned"><span class="bic">📚</span><div><div class="bnm">Quiz Hero</div><div class="bdsc">10+ quizzes</div><span class="btag te">✓ Earned</span></div></div>
+          <div class="bdg locked"><span class="bic">🌟</span><div><div class="bnm">Perfect 100</div><div class="bdsc">All subjects</div><span class="btag tl">🔒 Locked</span></div></div>
+          <div class="bdg locked"><span class="bic">👑</span><div><div class="bnm">Class Topper</div><div class="bdsc">Rank 1</div><span class="btag tl">🔒 Locked</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px">🤖 AI Skill Prediction</div>
+        <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Deep Learning model analysis based on your quiz history</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
+          <div style="background:var(--primary-bg);border:1px solid var(--primary);border-radius:10px;padding:12px;text-align:center"><div style="font-size:16px;font-weight:700;color:var(--primary)">Intermediate</div><div style="font-size:11px;color:var(--text3)">Skill Level</div></div>
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center"><div style="font-size:16px;font-weight:700;color:var(--success)">78%</div><div style="font-size:11px;color:var(--text3)">Confidence</div></div>
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center"><div style="font-size:16px;font-weight:700;color:var(--warning)">↑ 5%</div><div style="font-size:11px;color:var(--text3)">This Week</div></div>
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center"><div style="font-size:16px;font-weight:700;color:var(--text)">7 days</div><div style="font-size:11px;color:var(--text3)">Streak</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px">📋 Quiz History</div>
+        <div class="ftabs">
+          <div class="ft on" onclick="filterHist('all',this)">All</div>
+          <div class="ft" onclick="filterHist('math',this)">📐 Math</div>
+          <div class="ft" onclick="filterHist('science',this)">🔬 Science</div>
+          <div class="ft" onclick="filterHist('english',this)">📖 English</div>
+          <div class="ft" onclick="filterHist('history',this)">🏛️ History</div>
+          <div class="ft" onclick="filterHist('cs',this)">💻 CS</div>
+          <div class="ft" onclick="filterHist('geo',this)">🌍 Geo</div>
+        </div>
+        <table id="histTable">
+          <thead><tr><th>Subject</th><th>Topic</th><th>Score</th><th>Date</th></tr></thead>
+          <tbody>
+            <tr data-subj="cs"><td class="tdb">💻 CS</td><td>Arrays &amp; Loops</td><td style="color:var(--success);font-weight:700">5/5 — 100%</td><td>Mar 23</td></tr>
+            <tr data-subj="math"><td class="tdb">📐 Math</td><td>Quadratic Equations</td><td style="color:var(--warning);font-weight:700">4/5 — 80%</td><td>Mar 22</td></tr>
+            <tr data-subj="history"><td class="tdb">🏛️ History</td><td>Mughal Empire</td><td style="color:var(--success);font-weight:700">5/5 — 100%</td><td>Mar 19</td></tr>
+            <tr data-subj="english"><td class="tdb">📖 English</td><td>Grammar</td><td style="color:var(--danger);font-weight:700">3/5 — 60%</td><td>Mar 18</td></tr>
+            <tr data-subj="geo"><td class="tdb">🌍 Geo</td><td>Indian Rivers</td><td style="color:var(--warning);font-weight:700">3.5/5 — 70%</td><td>Mar 17</td></tr>
+            <tr data-subj="science"><td class="tdb">🔬 Science</td><td>Atoms &amp; Molecules</td><td style="color:var(--warning);font-weight:700">4/5 — 75%</td><td>Mar 16</td></tr>
+            <tr data-subj="math"><td class="tdb">📐 Math</td><td>Statistics</td><td style="color:var(--success);font-weight:700">4/5 — 82%</td><td>Mar 15</td></tr>
+            <tr data-subj="cs"><td class="tdb">💻 CS</td><td>Python Basics</td><td style="color:var(--success);font-weight:700">5/5 — 91%</td><td>Mar 14</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main><script>
+(function(){var t=localStorage.getItem('t')||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('t',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙';}
+function showToast(m){var t=document.getElementById('toastEl');if(!t)return;t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},3000);}
+
+function filterHist(s,el){
+  document.querySelectorAll('.ft').forEach(function(t){t.classList.remove('on')});
+  el.classList.add('on');
+  document.querySelectorAll('#histTable tbody tr').forEach(function(r){
+    r.style.display=(s==='all'||r.dataset.subj===s)?'':'none';
+  });
+}
+
+</script>
+</body></html>
